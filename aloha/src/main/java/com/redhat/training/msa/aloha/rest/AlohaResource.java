@@ -13,44 +13,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.redhat.training.msa.hola.rest;
+package com.redhat.training.msa.aloha.rest;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.enterprise.context.ApplicationScoped;
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.GenericType;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @Path("/")
-@Api("hola")
-@ApplicationScoped
-public class HolaResource {
+@Api("aloha")
+public class AlohaResource {
 
+	private final Logger log = LoggerFactory.getLogger(AlohaResource.class);
+	
     @Context
     private HttpServletRequest servletRequest;
 
-    /* (non-Javadoc)
-	 * @see com.redhat.training.msa.hola.rest.HolaResource#hola()
-	 */
-	@GET
-    @Path("/hola")
+
+    @GET
+    @Path("/aloha")
     @Produces("text/plain")
-    @ApiOperation("Returns the greeting in Spanish")
+    @ApiOperation("Returns the greeting in Hawaiian")
     public String hola() {
-        String hostname = servletRequest.getServerName();
-        return String.format("Hola de %s", hostname);
+        String hostname = servletRequest.getServerName(); 
+        return String.format("Aloha mai %s", hostname);
+
     }
+
 }

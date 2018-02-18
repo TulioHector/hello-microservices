@@ -1,5 +1,5 @@
-# hola
-hola microservice using MicroProfile on WildFly Swarm
+# aloha
+aloha microservice using MicroProfile on WildFly Swarm
 
 Deploy the application in OpenShift
 -----------------------------------
@@ -9,3 +9,4 @@ Deploy the application in OpenShift
 3. Execute:
 
 		mvn clean fabric8:deploy
+

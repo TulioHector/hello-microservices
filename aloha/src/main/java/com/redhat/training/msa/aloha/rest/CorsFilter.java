@@ -14,20 +14,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.redhat.training.msa.hola.rest;
+package com.redhat.training.msa.aloha.rest;
 
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
+import java.io.IOException;
 
-/**
- * A class extending {@link Application} and annotated with @ApplicationPath is the Java EE 7 "no XML" approach to activating
- * JAX-RS.
- *
- * <p>
- * Resources are served relative to the servlet path specified in the {@link ApplicationPath} annotation.
- * </p>
- */
-@ApplicationPath("/api")
-public class JaxRsActivator extends Application {
-    /* class body intentionally left blank */
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.ContainerResponseContext;
+import javax.ws.rs.container.ContainerResponseFilter;
+import javax.ws.rs.ext.Provider;
+
+@Provider
+public class CorsFilter implements ContainerResponseFilter {
+
+    @Override
+    public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException {
+        // Don't enable CORS for secured resources. This is made automatically already by the adapter
+        if (!requestContext.getUriInfo().getPath().endsWith("-secured")){
+            responseContext.getHeaders().add("Access-Control-Allow-Origin", "*");
+        }
+    }
+
 }
