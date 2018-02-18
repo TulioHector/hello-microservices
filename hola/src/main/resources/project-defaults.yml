@@ -1,0 +1,3 @@
+swarm:
+  bind:
+    address: localhost
