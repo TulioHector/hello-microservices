@@ -212,13 +212,13 @@
 				<version>${version.fabric8.plugin}</version>
 				<configuration>
 					<generator>
-		                <includes>
-		                  <include>wildfly-swarm</include>
-		                </includes>
-		                <excludes>
-		                  <exclude>webapp</exclude>
-		                </excludes>
-              		</generator>
+		                		<includes>
+		                 			<include>wildfly-swarm</include>
+		                		</includes>
+		                		<excludes>
+		                  			<exclude>webapp</exclude>
+		                		</excludes>
+              				</generator>
 					<resources>
 						<labels>
 							<all>

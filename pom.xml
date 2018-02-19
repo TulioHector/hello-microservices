@@ -55,6 +55,10 @@
 		<version.wiremock>2.14.0</version.wiremock>
 		<version.hystrix>1.5.9</version.hystrix>
 		<version.nimbus>4.23</version.nimbus>
+		<spring-boot.bom.version>1.5.8.Final-redhat-1</spring-boot.bom.version>
+		<version.spring-boot>1.5.8.RELEASE</version.spring-boot>
+		<version.vertx>3.4.2.redhat-006</version.vertx>
+		<version.vertx-maven-plugin>1.0.7</version.vertx-maven-plugin>
 	</properties>
 
 	<dependencyManagement>
@@ -70,6 +74,20 @@
 				<groupId>org.wildfly.swarm</groupId>
 				<artifactId>bom-all</artifactId>
 				<version>${version.wildfly.swarm}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>me.snowdrop</groupId>
+				<artifactId>spring-boot-bom</artifactId>
+				<version>${spring-boot.bom.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>io.vertx</groupId>
+				<artifactId>vertx-dependencies</artifactId>
+				<version>${version.vertx}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -149,13 +167,13 @@
 				<artifactId>hystrix-core</artifactId>
 				<version>${version.hystrix}</version>
 			</dependency>
-		        <dependency>
-            <groupId>com.nimbusds</groupId>
-            <artifactId>nimbus-jose-jwt</artifactId>
-            <version>${version.nimbus}</version>
-        </dependency>
+			<dependency>
+				<groupId>com.nimbusds</groupId>
+				<artifactId>nimbus-jose-jwt</artifactId>
+				<version>${version.nimbus}</version>
+			</dependency>
 		</dependencies>
-		
+
 	</dependencyManagement>
 
 	<dependencies>
@@ -165,9 +183,12 @@
 			<type>pom</type>
 		</dependency>
 	</dependencies>
+
 	<modules>
 		<module>hola</module>
 		<module>aloha</module>
+		<module>bonjour</module>
+		<module>ciao</module>
 	</modules>
 
 </project>
