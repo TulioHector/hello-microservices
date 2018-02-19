@@ -26,107 +26,13 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>microprofile-health</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>microprofile-config</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>microprofile-metrics</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>microprofile-fault-tolerance</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>microprofile-jwt</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>com.fasterxml.jackson.core</groupId>
-					<artifactId>jackson-databind</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.fasterxml.jackson.core</groupId>
-					<artifactId>jackson-core</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>swagger</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>swagger-webapp</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>hystrix</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>com.fasterxml.jackson.core</groupId>
-					<artifactId>jackson-databind</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.fasterxml.jackson.core</groupId>
-					<artifactId>jackson-core</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.resteasy</groupId>
-			<artifactId>resteasy-client</artifactId>
-			<scope>provided</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-io</groupId>
-					<artifactId>commons-io</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>jaeger</artifactId>
-		</dependency>
-		<!-- Feign -->
-		<dependency>
-			<groupId>io.github.openfeign.opentracing</groupId>
-			<artifactId>feign-hystrix-opentracing</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.github.openfeign</groupId>
-			<artifactId>feign-jackson</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>com.fasterxml.jackson.core</groupId>
-					<artifactId>jackson-databind</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>io.github.openfeign</groupId>
-			<artifactId>feign-httpclient</artifactId>
-		</dependency>
 
-
-		<!-- OpenTracing -->
-		<dependency>
-			<groupId>io.opentracing</groupId>
-			<artifactId>opentracing-noop</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.opentracing.contrib</groupId>
-			<artifactId>opentracing-web-servlet-filter</artifactId>
-		</dependency>
-
-		<!-- OpenTracing implementation - Jaeger -->
-		<dependency>
-			<groupId>com.uber.jaeger</groupId>
-			<artifactId>jaeger-core</artifactId>
-		</dependency>
 		<!-- arquillian -->
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
@@ -144,116 +50,12 @@
 			<artifactId>rest-assured</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.github.tomakehurst</groupId>
-			<artifactId>wiremock-standalone</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.netflix.hystrix</groupId>
-			<artifactId>hystrix-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.netflix.hystrix</groupId>
-			<artifactId>hystrix-metrics-event-stream</artifactId>
-			<version>${version.hystrix}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.netflix.hystrix</groupId>
-			<artifactId>hystrix-serialization</artifactId>
-			<version>${version.hystrix}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.keycloak</groupId>
-			<artifactId>keycloak-core</artifactId>
-			<version>${version.keycloak}</version>
-			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>com.fasterxml.jackson.core</groupId>
-					<artifactId>jackson-databind</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.fasterxml.jackson.core</groupId>
-					<artifactId>jackson-core</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.8.9</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.nimbusds</groupId>
-			<artifactId>nimbus-jose-jwt</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-io</groupId>
-					<artifactId>commons-io</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
 	</dependencies>
 
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
 		<plugins>
-			<plugin>
-				<groupId>io.fabric8</groupId>
-				<artifactId>fabric8-maven-plugin</artifactId>
-				<version>${version.fabric8.plugin}</version>
-				<configuration>
-					<generator>
-		                		<includes>
-		                 			<include>wildfly-swarm</include>
-		                		</includes>
-		                		<excludes>
-		                  			<exclude>webapp</exclude>
-		                		</excludes>
-              				</generator>
-					<resources>
-						<labels>
-							<all>
-								<property>
-									<name>app</name>
-									<value>hola</value>
-								</property>
-								<property>
-									<name>hystrix.enabled</name>
-									<value>true</value>
-								</property>
-							</all>
-						</labels>
-					</resources>
-					<enricher>
-						<config>
-							<wildfly-swarm-health-check>
-								<port>8080</port>
-								<scheme>HTTP</scheme>
-								<path>health</path>
-							</wildfly-swarm-health-check>
-						</config>
-					</enricher>
-				</configuration>
-				<executions>
-					<execution>
-						<id>fmp</id>
-						<goals>
-							<goal>resource</goal>
-							<goal>helm</goal>
-							<goal>build</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>${version.war.plugin}</version>
