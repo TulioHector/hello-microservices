@@ -34,22 +34,28 @@ import com.redhat.training.msa.aloha.json.PersonParser;
 
 
 //TODO Add a class-level path of '/'
+@Path("/")
 public class AlohaResource {
 
 	private final Logger log = LoggerFactory.getLogger(AlohaResource.class);
 	
     //TODO Inject the request using the Context
+	@Context
     private HttpServletRequest servletRequest;
 
     
     //TODO Use the PostConstruct annotation to run this method every time an AlohaResource is created
+	@PostConstruct
     private void init() {
     	log.info("AlohaResource created!");
     }
     
     //TODO Map this method to HTTP GET requests
-    //TODO Add a path of '/aloha'
+    @GET
+	//TODO Add a path of '/aloha'
+	@Path("/aloha")
     //TODO Specify that this method produces a media type of text/plain
+    @Produces(MediaType.TEXT_PLAIN)
     public String hola() {
         String hostname = servletRequest.getServerName(); 
         return String.format("Aloha mai %s", hostname);
@@ -57,9 +63,13 @@ public class AlohaResource {
     }
     
     //TODO Map this method to HTTP POST requests
+    @POST
     //TODO Add a path of '/aloha'
+    @Path("/aloha")
     //TODO Specify that this method produces a media type of text/plain
+    @Produces(MediaType.TEXT_PLAIN)
     //TODO Specify that this method consumes a media type of application/json
+    @Consumes(MediaType.APPLICATION_JSON)
     public String hola(String json) {
     	Person p = PersonParser.parse(json);
         String hostname = servletRequest.getServerName(); 

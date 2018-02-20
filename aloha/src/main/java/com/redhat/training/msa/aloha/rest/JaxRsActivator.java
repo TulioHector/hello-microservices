@@ -29,6 +29,7 @@ import javax.ws.rs.core.Application;
  */
 //TODO Enable JaxRs by extending the Application superclass
 //TODO Set a root path of '/api' for the entire application
-public class JaxRsActivator{
+@ApplicationPath("/api")
+public class JaxRsActivator extends Application{
     /* class body intentionally left blank */
 }
