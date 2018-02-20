@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
 import com.redhat.training.msa.aloha.json.Person;
 import com.redhat.training.msa.aloha.json.PersonParser;
 
-import io.swagger.annotations.ApiOperation;
 
 
 //TODO Add a class-level path of '/'
@@ -38,7 +37,8 @@ public class AlohaResource {
 
 	private final Logger log = LoggerFactory.getLogger(AlohaResource.class);
 	
-	@Inject
+	
+	//TODO Inject the parser class using CDI
 	private PersonParser parser;
 	
     //TODO Inject the request using the Context
