@@ -36,20 +36,13 @@ import io.swagger.annotations.ApiOperation;
 public class AlohaResource {
 
 	private final Logger log = LoggerFactory.getLogger(AlohaResource.class);
-	
-	@Inject
-	@ConfigProperty(name = "pauseTime", defaultValue = "0")
-	private Integer pauseTime;
-	
-    @Context
-    private SecurityContext securityContext;
 
     @Context
     private HttpServletRequest servletRequest;
 
     @PostConstruct
     private void init() {
-    		log.info(String.format("Aloha will pause for %d milliseconds in its endpoints", pauseTime));
+    		log.info("Starting ALoha service...");
     }
     
     @GET
@@ -57,9 +50,6 @@ public class AlohaResource {
     @Produces("text/plain")
     @ApiOperation("Returns the greeting in Hawaiian")
     public String hola() {
-    		if (pauseTime > 0) {
-    			try { Thread.sleep(pauseTime); } catch(Exception e) {};
-    		}
         String hostname = servletRequest.getServerName(); 
         return String.format("Aloha mai %s", hostname);
 
