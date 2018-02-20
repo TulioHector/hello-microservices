@@ -21,24 +21,13 @@ public class MainVerticle extends AbstractVerticle {
 
         LOG.info("Welcome to Vertx. Starting Ciao service...");
 
-        Router router = Router.router(vertx);
-        router.get("/api/ciao")
-              .produces("application/text")
-              .handler(rc ->
-              {
-                String host = rc.request().host();
-                rc.response().end("Ciao da " + host +"\n");
-              });
+        // TODO: Setup Vert.x router
+        // TODO: Add a route for the /api/ciao endpoint
+        // TODO: Add a handler that responds with Ciao and the hostname
 
-        vertx.createHttpServer()
-                .requestHandler(router::accept)
-                .listen(8080, result -> {
-                    if (result.succeeded()) {
-                        future.complete();
-                    } else {
-                        future.fail(result.cause());
-                    }
-                });
+        // TODO: Create a new HTTP server instance that handles the route
+        // TODO: Ensure you handle success or failure of each request and log failures (if any)
+
     }
 
 }

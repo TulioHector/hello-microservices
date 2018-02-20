@@ -59,19 +59,7 @@
 
 	<build>
     <plugins>
-      <plugin>
-        <groupId>io.fabric8</groupId>
-        <artifactId>vertx-maven-plugin</artifactId>
-        <version>${version.vertx-maven-plugin}</version>
-         <executions>
-           <execution>
-            <id>vmp</id>
-             <goals>
-              <goal>package</goal>
-             </goals>
-           </execution>
-         </executions>
-      </plugin>
+      <!-- TODO: Configure Vert.x maven plugin -->
     </plugins>
   </build>
 </project>

@@ -37,7 +37,8 @@ public class MainVerticleTest {
                 .getNow(8080, "localhost", "/api/ciao", response -> {
                     response.handler(responseBody -> {
                         testContext.assertTrue(responseBody.toString()
-                                .contains("Ciao"));
+                            // TODO: Add the correct response that you expect when you call the REST end point
+                                .contains("default text"));
                         async.complete();
                     });
                 });
