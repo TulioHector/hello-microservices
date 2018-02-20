@@ -33,7 +33,7 @@ public class HolaResourceFallbackTest {
     @Test
     @RunAsClient
     public void testHola() throws Exception {
-    	given().when().get("/api/hola").then().body(containsString("Hola de localhost"));
+    	// TODO: Invoke the /api/hola endpoint using a GET request and verify the response.
     }
 
 
