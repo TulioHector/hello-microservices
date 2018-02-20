@@ -27,7 +27,8 @@ import javax.ws.rs.core.Application;
  * Resources are served relative to the servlet path specified in the {@link ApplicationPath} annotation.
  * </p>
  */
-@ApplicationPath("/api")
-public class JaxRsActivator extends Application {
+//TODO Enable JaxRs by extending the Application superclass
+//TODO Set a root path of '/api' for the entire application
+public class JaxRsActivator{
     /* class body intentionally left blank */
 }

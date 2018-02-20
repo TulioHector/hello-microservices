@@ -16,7 +16,6 @@
 package com.redhat.training.msa.aloha.rest;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -27,63 +26,44 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
 
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.redhat.training.msa.aloha.json.Person;
 import com.redhat.training.msa.aloha.json.PersonParser;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 
-@Path("/")
-@Api("aloha")
+//TODO Add a class-level path of '/'
 public class AlohaResource {
 
 	private final Logger log = LoggerFactory.getLogger(AlohaResource.class);
 	
-	@Inject
-	@ConfigProperty(name = "pauseTime", defaultValue = "0")
-	private Integer pauseTime;
-	
-    @Context
-    private SecurityContext securityContext;
-
-    @Context
+    //TODO Inject the request using the Context
     private HttpServletRequest servletRequest;
 
-    @PostConstruct
+    
+    //TODO Use the PostConstruct annotation to run this method every time an AlohaResource is created
     private void init() {
-    		log.info(String.format("Aloha will pause for %d milliseconds in its endpoints", pauseTime));
+    	log.info("AlohaResource created!");
     }
     
-    @GET
-    @Path("/aloha")
-    @Produces("text/plain")
-    @ApiOperation("Returns the greeting in Hawaiian")
+    //TODO Map this method to HTTP GET requests
+    //TODO Add a path of '/aloha'
+    //TODO Specify that this method produces a media type of text/plain
     public String hola() {
-		if (pauseTime > 0) {
-			try { Thread.sleep(pauseTime); } catch(Exception e) {};
-		}
         String hostname = servletRequest.getServerName(); 
         return String.format("Aloha mai %s", hostname);
 
     }
     
-    @POST
-    @Path("/aloha")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.TEXT_PLAIN)
-    @ApiOperation("Returns the greeting in Hawaiian to a specific person")
+    //TODO Map this method to HTTP POST requests
+    //TODO Add a path of '/aloha'
+    //TODO Specify that this method produces a media type of text/plain
+    //TODO Specify that this method consumes a media type of application/json
     public String hola(String json) {
     	Person p = PersonParser.parse(json);
-		if (pauseTime > 0) {
-			try { Thread.sleep(pauseTime); } catch(Exception e) {};
-		}
         String hostname = servletRequest.getServerName(); 
         return String.format("Aloha mai %s %s from %s on %s", p.getFirstName(), p.getLastName(), p.getLocation(), hostname);
-
     }
 
 }
