@@ -15,11 +15,9 @@
  */
 package com.redhat.training.msa.aloha.rest;
 
-import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
@@ -32,11 +30,16 @@ import org.slf4j.LoggerFactory;
 import com.redhat.training.msa.aloha.json.Person;
 import com.redhat.training.msa.aloha.json.PersonParser;
 
+import io.swagger.annotations.ApiOperation;
+
 
 //TODO Add a class-level path of '/'
 public class AlohaResource {
 
 	private final Logger log = LoggerFactory.getLogger(AlohaResource.class);
+	
+	@Inject
+	private PersonParser parser;
 	
     //TODO Inject the request using the Context
     private HttpServletRequest servletRequest;
@@ -61,7 +64,7 @@ public class AlohaResource {
     //TODO Specify that this method produces a media type of text/plain
     //TODO Specify that this method consumes a media type of application/json
     public String hola(String json) {
-    	Person p = PersonParser.parse(json);
+    	Person p = parser.parse(json);
         String hostname = servletRequest.getServerName(); 
         return String.format("Aloha mai %s %s from %s on %s", p.getFirstName(), p.getLastName(), p.getLocation(), hostname);
     }
