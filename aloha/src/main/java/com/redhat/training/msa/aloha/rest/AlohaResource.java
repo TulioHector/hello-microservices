@@ -47,6 +47,9 @@ public class AlohaResource {
 	@ConfigProperty(name = "pauseTime", defaultValue = "0")
 	private Integer pauseTime;
 	
+	@Inject
+	private PersonParser parser;
+	
     @Context
     private SecurityContext securityContext;
 
@@ -60,7 +63,7 @@ public class AlohaResource {
     
     @GET
     @Path("/aloha")
-    @Produces("text/plain")
+    @Produces(MediaType.TEXT_PLAIN)
     @ApiOperation("Returns the greeting in Hawaiian")
     public String hola() {
 		if (pauseTime > 0) {
@@ -77,7 +80,7 @@ public class AlohaResource {
     @Produces(MediaType.TEXT_PLAIN)
     @ApiOperation("Returns the greeting in Hawaiian to a specific person")
     public String hola(String json) {
-    	Person p = PersonParser.parse(json);
+    	Person p = parser.parse(json);
 		if (pauseTime > 0) {
 			try { Thread.sleep(pauseTime); } catch(Exception e) {};
 		}
