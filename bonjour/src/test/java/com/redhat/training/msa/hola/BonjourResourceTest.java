@@ -37,7 +37,7 @@ public class BonjourResourceTest {
 
     @Test
     public void invokeHello() throws Exception {
-        given().get("/api/bonjour").then().assertThat().statusCode(200).body(containsString("Bonjour"));
+        // TODO: invoke the bonjour service and verify the response
     }
 
 }
