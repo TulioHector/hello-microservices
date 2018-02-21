@@ -23,30 +23,7 @@
 	<description>A simple microservice using Spring Boot that says Bonjour</description>
 
   <dependencies>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-actuator</artifactId>
-    </dependency>
-		<dependency>
-      <groupId>org.apache.cxf</groupId>
-      <artifactId>cxf-spring-boot-starter-jaxrs</artifactId>
-      <version>3.2.0</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-webmvc</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
+    <!-- TODO: Add Spring Boot dependencies -->
 		<dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
@@ -75,21 +52,6 @@
         </executions>
       </plugin>
 
-      <plugin>
-            <groupId>io.fabric8</groupId>
-            <artifactId>fabric8-maven-plugin</artifactId>
-            <version>${version.fabric8.plugin}</version>
-            <executions>
-              <execution>
-                <id>fmp</id>
-                <phase>package</phase>
-                <goals>
-                  <goal>resource</goal>
-                  <goal>build</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-    </plugins>
+      <!-- TODO: Configure fabric8 maven plugin -->
   </build>
 </project>
