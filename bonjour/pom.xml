@@ -55,7 +55,6 @@
 		<dependency>
 			 <groupId>io.rest-assured</groupId>
 			 <artifactId>rest-assured</artifactId>
-			 <version>3.0.3</version>
 			 <scope>test</scope>
 	 </dependency>
   </dependencies>
@@ -75,21 +74,6 @@
         </executions>
       </plugin>
 
-      <plugin>
-            <groupId>io.fabric8</groupId>
-            <artifactId>fabric8-maven-plugin</artifactId>
-            <version>${version.fabric8.plugin}</version>
-            <executions>
-              <execution>
-                <id>fmp</id>
-                <phase>package</phase>
-                <goals>
-                  <goal>resource</goal>
-                  <goal>build</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
     </plugins>
   </build>
 </project>
