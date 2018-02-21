@@ -11,22 +11,23 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Path("/api")
-@Component
+// TODO: Set up the Path for this resource and declare this class 
+// as a Spring Boot component
 public class BonjourResource {
 
-    @Autowired
-    private BonjourService service;
+    // TODO: Inject the BonjourService component
 
     @Context
     private HttpServletRequest servletRequest;
 
-    @GET
-    @Path("/bonjour")
-    @Produces(MediaType.TEXT_PLAIN)
+    // TODO: Declare the HTTP method type
+    // TODO: Declare the path to this method/end point
+    // TODO: Declare the response type (Content-Type header)
     public String bonjour() {
         String hostname = servletRequest.getServerName(); 
-        return service.bonjour() + hostname + "\n";
+        // TODO: Invoke the bonjour() method on BonjourService
+        // and return the response
+        return null;
     }
 
 }

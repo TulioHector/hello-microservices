@@ -14,12 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import io.restassured.RestAssured;
 
-@ActiveProfiles("test")
-@RunWith(SpringRunner.class)
-@SpringBootTest(
-  webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-  classes = com.redhat.training.msa.hello.Application.class
-)
+// TODO: Set up the Spring Boot test runner and configuration
 public class BonjourResourceTest {
 
     @Value("${local.server.port}")
@@ -27,7 +22,8 @@ public class BonjourResourceTest {
 
     @Before
     public void beforeTest() {
-        RestAssured.baseURI = String.format("http://localhost:%d", port);
+        // TODO: Add the URL for the Bonjour service
+        RestAssured.baseURI = "";
     }
 
     @Test
@@ -37,7 +33,7 @@ public class BonjourResourceTest {
 
     @Test
     public void invokeHello() throws Exception {
-        given().get("/api/bonjour").then().assertThat().statusCode(200).body(containsString("Bonjour"));
+        // TODO: Invoke the bonjour end point and verify the reponse
     }
 
 }
