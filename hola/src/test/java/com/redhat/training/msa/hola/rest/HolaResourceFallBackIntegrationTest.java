@@ -51,10 +51,10 @@ public class HolaResourceFallBackIntegrationTest {
         WebTarget target = client.target(this.url.toExternalForm()+"/api/hola");
 		//TODO The REST Endpoint returns only text, set the request to get MediaType.TEXT_PLAIN and store the output to a Response object
         Response response = target.request(MediaType.TEXT_PLAIN).get();
-		//TODO Use Hamcrest to evaluate the HTTP code is 200        
-		assertThat(response.getStatus(), is(200));
-		//TODO Use Hamcrest to evaluate the Body of the REST response with "Hola de localhost"
-		assertThat(response.readEntity(String.class), is("Hola de localhost"));
+		//TODO Evaluate the HTTP code is 200        
+		assertEquals(200,response.getStatus());
+		//TODO Evaluate the Body of the REST response with "Hola de localhost"
+		assertEquals("Hola de localhost",response.readEntity(String.class));
 	}
 
 }
