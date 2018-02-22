@@ -12,21 +12,20 @@ import org.wildfly.swarm.Swarm;
 import org.wildfly.swarm.arquillian.CreateSwarm;
 
 
-@RunWith(Arquillian.class)
+//TODO Annotate the class to support Arquillian
 public class HolaResourceFallBackIntegrationTest {
 
 	//TODO Inject the URL used by Arquillian to test the application
-    @ArquillianResource
     private URL url;
-	
-	@Deployment
+
+   //TODO Annotate the method to provide the webarchive	
 	public static WebArchive deploy() {
 		//TODO Delegate a call to the deploy static method from ArquillianTestUtils class
 		//TODO Add the microprofile-config.properties file to the META-INF directory
 		return null;
 	}
 	
-	@CreateSwarm
+   //TODO To provide the Swarm configuration
 	public static Swarm createSwarm() throws Exception {
 		//TODO Delegate a call to the newContainer static method from ArquillianTestUtils class
 		return null;
