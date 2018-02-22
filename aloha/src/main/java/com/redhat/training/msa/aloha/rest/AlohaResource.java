@@ -18,15 +18,21 @@ package com.redhat.training.msa.aloha.rest;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.redhat.training.msa.aloha.json.Person;
+import com.redhat.training.msa.aloha.json.PersonParser;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -41,6 +47,9 @@ public class AlohaResource {
 	@ConfigProperty(name = "pauseTime", defaultValue = "0")
 	private Integer pauseTime;
 	
+	@Inject
+	private PersonParser parser;
+	
     @Context
     private SecurityContext securityContext;
 
@@ -54,14 +63,29 @@ public class AlohaResource {
     
     @GET
     @Path("/aloha")
-    @Produces("text/plain")
+    @Produces(MediaType.TEXT_PLAIN)
     @ApiOperation("Returns the greeting in Hawaiian")
     public String hola() {
-    		if (pauseTime > 0) {
-    			try { Thread.sleep(pauseTime); } catch(Exception e) {};
-    		}
+		if (pauseTime > 0) {
+			try { Thread.sleep(pauseTime); } catch(Exception e) {};
+		}
         String hostname = servletRequest.getServerName(); 
         return String.format("Aloha mai %s", hostname);
+
+    }
+    
+    @POST
+    @Path("/aloha")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
+    @ApiOperation("Returns the greeting in Hawaiian to a specific person")
+    public String hola(String json) {
+    	Person p = parser.parse(json);
+		if (pauseTime > 0) {
+			try { Thread.sleep(pauseTime); } catch(Exception e) {};
+		}
+        String hostname = servletRequest.getServerName(); 
+        return String.format("Aloha mai %s %s from %s on %s", p.getFirstName(), p.getLastName(), p.getLocation(), hostname);
 
     }
 
