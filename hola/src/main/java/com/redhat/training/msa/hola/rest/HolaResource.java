@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
@@ -35,6 +36,7 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.SecurityContext;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.faulttolerance.Bulkhead;
 import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
 import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.faulttolerance.Timeout;
@@ -68,6 +70,8 @@ public class HolaResource {
     @Context
     private HttpServletRequest servletRequest;
 
+    private String serverName;
+    
     @Inject
     @Metric(name = "requestCount", description = "Total endpoint requests made to the Hola microservice",
     		displayName="HolaResource#requestCount", absolute=true)
@@ -87,6 +91,12 @@ public class HolaResource {
     @ConfigProperty(name="alohaPort")
     private String port;
 
+    
+    @PostConstruct
+    public void init() {
+    	serverName = servletRequest.getServerName();
+    }
+    
     /* (non-Javadoc)
 	 * @see com.redhat.training.msa.hola.rest.HolaResource#hola()
 	 */
@@ -98,7 +108,7 @@ public class HolaResource {
     @PermitAll
     public String hola() {
     		requestCounter.inc();
-        String hostname = servletRequest.getServerName();
+        
         return String.format("Hola de %s", hostname);
     }
 	
@@ -131,10 +141,9 @@ public class HolaResource {
     @ApiOperation("Returns the greeting plus the next service in the chain")
     @Timed(absolute=true, unit = MetricUnits.MILLISECONDS, name = "holaChainingTimer",
     		displayName = "holaChainingTimer", description = "Invocation time for the holaChaining endpoint")
-    @Fallback(fallbackMethod="alohaFallback")
-    @CircuitBreaker(successThreshold = 4, requestVolumeThreshold = 3,
+    @CircuitBreaker(requestVolumeThreshold = 1,
     		failureRatio = 0.50, delay = 1000)
-    @Timeout(1000)
+	@Bulkhead(2)
     @PermitAll
     public List<String> holaChaining() {
     		requestCounter.inc();
