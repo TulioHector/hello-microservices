@@ -1,5 +1,8 @@
 package com.redhat.training.msa.hola.rest;
 
+import static org.junit.Assert.fail;
+
+
 import java.net.URL;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -37,6 +40,8 @@ public class HolaResourceFallBackIntegrationTest {
 		//TODO The REST Endpoint returns only text, set the request to get MediaType.TEXT_PLAIN and store the output to a Response object
 		//TODO Use Hamcrest to evaluate the HTTP code is 200        
 		//TODO Use Hamcrest to evaluate the Body of the REST response with "Hola de localhost"
+		fail("Not implemented!");
+
 	}
 
 }
