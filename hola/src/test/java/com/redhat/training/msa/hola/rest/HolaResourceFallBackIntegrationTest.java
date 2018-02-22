@@ -1,6 +1,6 @@
 package com.redhat.training.msa.hola.rest;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 
 import java.net.URL;
@@ -38,8 +38,8 @@ public class HolaResourceFallBackIntegrationTest {
 		//TODO Use the ClientBuilder class from javax.ws.rs.client.ClientBuilder class
 		//TODO Define call the target method and pass this.url.toExternalForm()+"/api/hola" as a parameter
 		//TODO The REST Endpoint returns only text, set the request to get MediaType.TEXT_PLAIN and store the output to a Response object
-		//TODO Use Hamcrest to evaluate the HTTP code is 200        
-		//TODO Use Hamcrest to evaluate the Body of the REST response with "Hola de localhost"
+		//TODO Evaluate the HTTP code is 200        
+		//TODO Evaluate the Body of the REST response with "Hola de localhost"
 		fail("Not implemented!");
 
 	}
