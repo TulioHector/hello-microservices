@@ -4,6 +4,14 @@ import static org.junit.Assert.*;
 
 
 import java.net.URL;
+import java.util.Set;
+
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -14,6 +22,7 @@ import org.junit.runner.RunWith;
 import org.wildfly.swarm.Swarm;
 import org.wildfly.swarm.arquillian.CreateSwarm;
 
+import com.redhat.training.msa.hola.ArquillianTestUtils;
 
 //TODO Annotate the class to support Arquillian
 public class HolaResourceFallBackIntegrationTest {
