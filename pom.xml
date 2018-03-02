@@ -36,7 +36,7 @@
 		<version.war.plugin>2.5</version.war.plugin>
 		<version.fabric8.plugin>3.5.34</version.fabric8.plugin>
 		<fabric8.generator.fromMode>istag</fabric8.generator.fromMode>
-		<fabric8.generator.from>redhat-openjdk-18/openjdk18-openshift</fabric8.generator.from>
+		<fabric8.generator.from>redhat-openjdk18-openshift</fabric8.generator.from>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<swagger.version>1.5.8</swagger.version>
