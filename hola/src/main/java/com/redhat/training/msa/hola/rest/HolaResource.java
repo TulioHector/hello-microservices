@@ -19,24 +19,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.GenericType;
-
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @Path("/")
 @Api("hola")
-@ApplicationScoped
 public class HolaResource {
 
     @Context
@@ -51,6 +44,6 @@ public class HolaResource {
     @ApiOperation("Returns the greeting in Spanish")
     public String hola() {
         String hostname = servletRequest.getServerName();
-        return String.format("Hola de %s", hostname);
+        return String.format("Hola de %s\n", hostname);
     }
 }

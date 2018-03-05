@@ -35,22 +35,15 @@
 		<version.surefire.plugin>2.16</version.surefire.plugin>
 		<version.war.plugin>2.5</version.war.plugin>
 		<version.fabric8.plugin>3.5.34</version.fabric8.plugin>
-		<fabric8.generator.from>registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift</fabric8.generator.from>
+		<fabric8.generator.fromMode>istag</fabric8.generator.fromMode>
+		<fabric8.generator.from>redhat-openjdk18-openshift</fabric8.generator.from>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<swagger.version>1.5.8</swagger.version>
-		<version.microprofile>1.2</version.microprofile>
 	</properties>
 
 	<dependencyManagement>
 		<dependencies>
-			<dependency>
-				<groupId>org.eclipse.microprofile</groupId>
-				<artifactId>microprofile</artifactId>
-				<version>${version.microprofile}</version>
-				<type>pom</type>
-				<scope>provided</scope>
-			</dependency>
 			<dependency>
 				<groupId>org.wildfly.swarm</groupId>
 				<artifactId>bom-all</artifactId>
@@ -68,16 +61,6 @@
 				<artifactId>swagger-ui</artifactId>
 				<version>2.1.4</version>
 			</dependency>
-		</dependencies>
-		
+		</dependencies>	
 	</dependencyManagement>
-
-	<dependencies>
-		<dependency>
-			<groupId>org.eclipse.microprofile</groupId>
-			<artifactId>microprofile</artifactId>
-			<type>pom</type>
-		</dependency>
-	</dependencies>
-
 </project>
