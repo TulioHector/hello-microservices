@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
@@ -53,123 +54,106 @@ import io.swagger.annotations.ApiOperation;
 
 @Path("/")
 @Api("hola")
-@DeclareRoles({"VIP", "Voter"})
+@DeclareRoles({ "VIP", "Voter" })
 
 @ApplicationScoped
 public class HolaResource {
 
-    @Inject
-    @WithoutTracing
-    private AlohaService alohaService;
+	@Inject
+	@WithoutTracing
+	private AlohaService alohaService;
 
-    @Context
-    private SecurityContext securityContext;
+	@Context
+	private SecurityContext securityContext;
 
-    @Context
-    private HttpServletRequest servletRequest;
-
-    @Inject
-    @Metric(name = "requestCount", description = "Total endpoint requests made to the Hola microservice",
-    		displayName="HolaResource#requestCount", absolute=true)
-    private Counter requestCounter;
+	@Context
+	private HttpServletRequest servletRequest;
 
 	@Inject
-	@Metric(name = "failureCount", description = "Total chained endpoint failures encountered",
-    		displayName="HolaResource#failureCount", absolute=true)
-	private Counter failedCount;
-	
-	
-    @Inject
-    @ConfigProperty(name="alohaHostname")
-    private String hostname;
-    
-    @Inject
-    @ConfigProperty(name="alohaPort")
-    private String port;
+	@Metric(name = "requestCount", description = "Total endpoint requests made to the Hola microservice", displayName = "HolaResource#requestCount", absolute = true)
+	private Counter requestCounter;
 
-    /* (non-Javadoc)
+	@Inject
+	@Metric(name = "failureCount", description = "Total chained endpoint failures encountered", displayName = "HolaResource#failureCount", absolute = true)
+	private Counter failedCount;
+
+	@Inject
+	@ConfigProperty(name = "alohaHostname")
+	private String hostname;
+
+	@Inject
+	@ConfigProperty(name = "alohaPort")
+	private String port;
+
+	
+	private String serverName;
+
+	@PostConstruct
+	public void init() {
+		serverName = servletRequest.getServerName();
+	}	
+	
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.redhat.training.msa.hola.rest.HolaResource#hola()
 	 */
 	@GET
-    @Path("/hola")
-    @Produces("text/plain")
-    @ApiOperation("Returns the greeting in Spanish")
-    @Timed
-    @PermitAll
-    public String hola() {
-    		requestCounter.inc();
-        String hostname = servletRequest.getServerName();
-        return String.format("Hola de %s", hostname);
-    }
-	
-	//To implement this class, I followed the steps from this blog post from Siamak: https://blog.openshift.com/building-microservices-wildfly-swarm-netflix-oss-openshift/
-	//One important fact: The Hystrix Dashboard cannot connect to the app due to a bug: https://issues.jboss.org/browse/SWARM-1796
-
-	class HolaCommand extends HystrixCommand<String> {
-	    public HolaCommand() {
-	        super(HystrixCommandGroupKey.Factory.asKey("HolaGroup"));
-	    }
-
-	    @Override
-	    protected String run() {
-	        String url = "/api/hola";
-	        Builder request = ClientBuilder.newClient().target(url).request();
-	        try {
-	            return request.get(new GenericType<String>(){});
-	        } catch (Exception e) {
-	            return null;
-	        }
-	    }
+	@Path("/hola")
+	@Produces("text/plain")
+	@ApiOperation("Returns the greeting in Spanish")
+	@Timed
+	@PermitAll
+	public String hola() {
+		requestCounter.inc();
+		return String.format("Hola de %s", serverName);
 	}
 
-    /* (non-Javadoc)
+
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.redhat.training.msa.hola.rest.HolaResource#holaChaining()
 	 */
 	@GET
-    @Path("/hola-chaining")
-    @Produces("application/json")
-    @ApiOperation("Returns the greeting plus the next service in the chain")
-    @Timed(absolute=true, unit = MetricUnits.MILLISECONDS, name = "holaChainingTimer",
-    		displayName = "holaChainingTimer", description = "Invocation time for the holaChaining endpoint")
-    @Fallback(fallbackMethod="alohaFallback")
-    @CircuitBreaker(successThreshold = 4, requestVolumeThreshold = 3,
-    		failureRatio = 0.50, delay = 1000)
-    @Timeout(1000)
-    @PermitAll
-    public List<String> holaChaining() {
-    		requestCounter.inc();
-        List<String> greetings = new ArrayList<>();
-        greetings.add(hola());
-        greetings.add(alohaService.aloha());
-        return greetings;
-    }
+	@Path("/hola-chaining")
+	@Produces("application/json")
+	@ApiOperation("Returns the greeting plus the next service in the chain")
+	@Timed(absolute = true, unit = MetricUnits.MILLISECONDS, name = "holaChainingTimer", displayName = "holaChainingTimer", description = "Invocation time for the holaChaining endpoint")
+	@Fallback(fallbackMethod = "alohaFallback")
+	@Timeout(value = 1000)
+	@PermitAll
+	public List<String> holaChaining() {
+		requestCounter.inc();
+		List<String> greetings = new ArrayList<>();
+		greetings.add(hola());
+		greetings.add(alohaService.aloha());
+		return greetings;
+	}
 
-	
-	
-
-	
-    /* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.redhat.training.msa.hola.rest.HolaResource#secureHola()
 	 */
 	@GET
-    @Path("/hola-secure")
-    @Produces("application/json")
-    @RolesAllowed({"VIP", "Voter"})
-    public SecurePackage secureHola() {
-    		boolean isVIP = securityContext.isUserInRole("VIP");
-    		JsonWebToken token = (JsonWebToken) securityContext.getUserPrincipal();
-    		return new SecurePackage(token.getName(), new Date(token.getExpirationTime() * 1000).toString(), isVIP);
-    }
+	@Path("/hola-secure")
+	@Produces("application/json")
+	@RolesAllowed({ "VIP", "Voter" })
+	public SecurePackage secureHola() {
+		boolean isVIP = securityContext.isUserInRole("VIP");
+		JsonWebToken token = (JsonWebToken) securityContext.getUserPrincipal();
+		return new SecurePackage(token.getName(), new Date(token.getExpirationTime() * 1000).toString(), isVIP);
+	}
 
-	
-	
-	
-    @SuppressWarnings("unused")
+	@SuppressWarnings("unused")
+	@Produces("application/json")
 	private List<String> alohaFallback() {
 		failedCount.inc();
-	    List<String> greetings = new ArrayList<>();
-	    greetings.add(hola());
-	    greetings.add("Aloha fallback");
-	    return greetings;
+		List<String> greetings = new ArrayList<>();
+		greetings.add(hola());
+		greetings.add("Aloha fallback");
+		return greetings;
 	}
 }
