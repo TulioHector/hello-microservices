@@ -18,7 +18,7 @@
     <version>1.0</version>
   </parent>
 
-  <artifactId>hola</artifactId>
+  <artifactId>hello</artifactId>
   <packaging>war</packaging>
   <name>Red Hat Training MSA: hello</name>
   <description>Hello World microservice</description>
