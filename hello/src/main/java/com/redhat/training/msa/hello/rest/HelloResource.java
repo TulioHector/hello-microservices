@@ -15,35 +15,22 @@
  */
 package com.redhat.training.msa.hola.rest;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @Path("/")
-@Api("hola")
-public class HolaResource {
+@Api("hello")
+public class HelloResource {
 
-    @Context
-    private HttpServletRequest servletRequest;
-
-    /* (non-Javadoc)
-	 * @see com.redhat.training.msa.hola.rest.HolaResource#hola()
-	 */
-	@GET
-    @Path("/hola")
+    @GET
+    @Path("/hello")
     @Produces("text/plain")
-    @ApiOperation("Returns the greeting in Spanish")
-    public String hola() {
-        String hostname = servletRequest.getServerName();
-        return String.format("Hola de %s\n", hostname);
+    @ApiOperation("Returns a greeting")
+    public String hello() {
+        return "Hello World!\n";
     }
 }
