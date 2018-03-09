@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
@@ -35,14 +36,12 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.SecurityContext;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.faulttolerance.Bulkhead;
 import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
-import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.faulttolerance.Timeout;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.eclipse.microprofile.metrics.Counter;
-import org.eclipse.microprofile.metrics.MetricUnits;
 import org.eclipse.microprofile.metrics.annotation.Metric;
-import org.eclipse.microprofile.metrics.annotation.Timed;
 
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
@@ -68,6 +67,8 @@ public class HolaResource {
     @Context
     private HttpServletRequest servletRequest;
 
+    private String serverName;
+    
     @Inject
     @Metric(name = "requestCount", description = "Total endpoint requests made to the Hola microservice",
     		displayName="HolaResource#requestCount", absolute=true)
@@ -87,6 +88,12 @@ public class HolaResource {
     @ConfigProperty(name="alohaPort")
     private String port;
 
+    
+    @PostConstruct
+    public void init() {
+    	serverName = servletRequest.getServerName();
+    }
+    
     /* (non-Javadoc)
 	 * @see com.redhat.training.msa.hola.rest.HolaResource#hola()
 	 */
@@ -94,34 +101,13 @@ public class HolaResource {
     @Path("/hola")
     @Produces("text/plain")
     @ApiOperation("Returns the greeting in Spanish")
-    @Timed
     @PermitAll
     public String hola() {
     		requestCounter.inc();
-        String hostname = servletRequest.getServerName();
+        
         return String.format("Hola de %s", hostname);
     }
 	
-	//To implement this class, I followed the steps from this blog post from Siamak: https://blog.openshift.com/building-microservices-wildfly-swarm-netflix-oss-openshift/
-	//One important fact: The Hystrix Dashboard cannot connect to the app due to a bug: https://issues.jboss.org/browse/SWARM-1796
-
-	class HolaCommand extends HystrixCommand<String> {
-	    public HolaCommand() {
-	        super(HystrixCommandGroupKey.Factory.asKey("HolaGroup"));
-	    }
-
-	    @Override
-	    protected String run() {
-	        String url = "/api/hola";
-	        Builder request = ClientBuilder.newClient().target(url).request();
-	        try {
-	            return request.get(new GenericType<String>(){});
-	        } catch (Exception e) {
-	            return null;
-	        }
-	    }
-	}
-
     /* (non-Javadoc)
 	 * @see com.redhat.training.msa.hola.rest.HolaResource#holaChaining()
 	 */
@@ -129,13 +115,10 @@ public class HolaResource {
     @Path("/hola-chaining")
     @Produces("application/json")
     @ApiOperation("Returns the greeting plus the next service in the chain")
-    @Timed(absolute=true, unit = MetricUnits.MILLISECONDS, name = "holaChainingTimer",
-    		displayName = "holaChainingTimer", description = "Invocation time for the holaChaining endpoint")
-    @Fallback(fallbackMethod="alohaFallback")
-    @CircuitBreaker(successThreshold = 4, requestVolumeThreshold = 3,
-    		failureRatio = 0.50, delay = 1000)
-    @Timeout(1000)
     @PermitAll
+	@Timeout(1000)
+	@CircuitBreaker(requestVolumeThreshold = 1,
+    		failureRatio = 0.50, delay = 500)
     public List<String> holaChaining() {
     		requestCounter.inc();
         List<String> greetings = new ArrayList<>();
