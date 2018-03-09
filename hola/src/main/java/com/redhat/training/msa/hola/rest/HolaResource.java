@@ -38,7 +38,10 @@ import javax.ws.rs.core.SecurityContext;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.faulttolerance.Bulkhead;
 import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
+<<<<<<< HEAD
 import org.eclipse.microprofile.faulttolerance.Timeout;
+=======
+>>>>>>> abd5368aaed7b9883bdc30a6de000b56eb288a9c
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.eclipse.microprofile.metrics.Counter;
 import org.eclipse.microprofile.metrics.annotation.Metric;
@@ -116,7 +119,10 @@ public class HolaResource {
     @Produces("application/json")
     @ApiOperation("Returns the greeting plus the next service in the chain")
     @PermitAll
+    //TODO Implement the @Timeout with 1000ms
 	@Timeout(1000)
+    //TODO Implement the @CircuitBreaker with 500ms delay, with the 
+	//one as the requestVolumeThreshold and the failureRatio of 0.5
 	@CircuitBreaker(requestVolumeThreshold = 1,
     		failureRatio = 0.50, delay = 500)
     public List<String> holaChaining() {
