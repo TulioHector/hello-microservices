@@ -49,10 +49,20 @@
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-client</artifactId>
 			<scope>provided</scope>
- <!-- <exclusions> <exclusion> <groupId>commons-io</groupId> 
-				<artifactId>commons-io</artifactId> </exclusion> </exclusions> -->
+			<!-- <exclusions> <exclusion> <groupId>commons-io</groupId> <artifactId>commons-io</artifactId> 
+				</exclusion> </exclusions> -->
 		</dependency>
 
+		<dependency>
+			<groupId>com.netflix.hystrix</groupId>
+			<artifactId>hystrix-core</artifactId>
+			<version>${hystrix.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.netflix.hystrix</groupId>
+			<artifactId>hystrix-metrics-event-stream</artifactId>
+			<version>${hystrix.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
