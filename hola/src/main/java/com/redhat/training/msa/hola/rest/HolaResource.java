@@ -97,10 +97,10 @@ public class HolaResource {
     @Timed
     @PermitAll
     public String hola() {
-    		requestCounter.inc();
-        
-        return String.format("Hola de %s", hostname);
+   		requestCounter.inc();
+        return String.format("Hola de %s", serverName);
     }
+	
 	
     /* (non-Javadoc)
 	 * @see com.redhat.training.msa.hola.rest.HolaResource#holaChaining()

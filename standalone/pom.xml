@@ -30,7 +30,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
-		<version.wildfly.swarm>2017.12.1</version.wildfly.swarm>
+		<version.wildfly.swarm>2018.3.3</version.wildfly.swarm>
 		<version.compiler.plugin>3.1</version.compiler.plugin>
 		<version.war.plugin>2.5</version.war.plugin>
 		<version.fabric8.plugin>3.5.30</version.fabric8.plugin>
