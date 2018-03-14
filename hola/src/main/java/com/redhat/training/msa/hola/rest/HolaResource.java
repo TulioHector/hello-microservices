@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
@@ -87,6 +88,13 @@ public class HolaResource {
     @ConfigProperty(name="alohaPort")
     private String port;
 
+    
+    //Workaround to capture the servername. Calling this method in any method in the class breaks the application.
+    @PostConstruct
+    public void init() {
+    	hostname = servletRequest.getServerName();
+    }
+    
     /* (non-Javadoc)
 	 * @see com.redhat.training.msa.hola.rest.HolaResource#hola()
 	 */
@@ -98,7 +106,6 @@ public class HolaResource {
     @PermitAll
     public String hola() {
     		requestCounter.inc();
-        String hostname = servletRequest.getServerName();
         return String.format("Hola de %s", hostname);
     }
 	
@@ -117,7 +124,7 @@ public class HolaResource {
 	        try {
 	            return request.get(new GenericType<String>(){});
 	        } catch (Exception e) {
-	            return null;
+	            throw e;
 	        }
 	    }
 	}
