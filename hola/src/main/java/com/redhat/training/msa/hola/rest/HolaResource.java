@@ -107,10 +107,8 @@ public class HolaResource {
 	public String hola() {
 		requestCounter.inc();
 		return String.format("Hola de %s", serverName);
-	}
-
-
-
+	}    
+	
 	/*
 	 * (non-Javadoc)
 	 * 
