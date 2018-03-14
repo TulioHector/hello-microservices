@@ -138,7 +138,7 @@ public class HolaResource {
     @ApiOperation("Returns the greeting plus the next service in the chain")
     @Timed(absolute=true, unit = MetricUnits.MILLISECONDS, name = "holaChainingTimer",
     		displayName = "holaChainingTimer", description = "Invocation time for the holaChaining endpoint")
-//    @Fallback(fallbackMethod="alohaFallback")
+    @Fallback(fallbackMethod="alohaFallback")
     @CircuitBreaker(successThreshold = 4, requestVolumeThreshold = 3,
     		failureRatio = 0.50, delay = 1000)
     @Timeout(1000)
@@ -147,7 +147,7 @@ public class HolaResource {
     		requestCounter.inc();
         List<String> greetings = new ArrayList<>();
         greetings.add(hola());
-        greetings.add(new HolaCommand().execute());
+        greetings.add(alohaService.aloha());
         return greetings;
     }
 
