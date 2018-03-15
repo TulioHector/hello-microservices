@@ -109,25 +109,6 @@ public class HolaResource {
         return String.format("Hola de %s", hostname);
     }
 	
-	//To implement this class, I followed the steps from this blog post from Siamak: https://blog.openshift.com/building-microservices-wildfly-swarm-netflix-oss-openshift/
-	//One important fact: The Hystrix Dashboard cannot connect to the app due to a bug: https://issues.jboss.org/browse/SWARM-1796
-
-	class HolaCommand extends HystrixCommand<String> {
-	    public HolaCommand() {
-	        super(HystrixCommandGroupKey.Factory.asKey("HolaGroup"));
-	    }
-
-	    @Override
-	    protected String run() {
-	        String url = "/api/hola";
-	        Builder request = ClientBuilder.newClient().target(url).request();
-	        try {
-	            return request.get(new GenericType<String>(){});
-	        } catch (Exception e) {
-	            throw e;
-	        }
-	    }
-	}
 
     /* (non-Javadoc)
 	 * @see com.redhat.training.msa.hola.rest.HolaResource#holaChaining()
