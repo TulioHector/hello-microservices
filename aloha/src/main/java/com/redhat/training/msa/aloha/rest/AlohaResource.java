@@ -15,17 +15,11 @@
  */
 package com.redhat.training.msa.aloha.rest;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
-
-import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -34,8 +28,6 @@ import io.swagger.annotations.ApiOperation;
 @Api("aloha")
 public class AlohaResource {
 
-	private final Logger log = LoggerFactory.getLogger(AlohaResource.class);
-	
     @Context
     private HttpServletRequest servletRequest;
 
@@ -46,7 +38,7 @@ public class AlohaResource {
     @ApiOperation("Returns the greeting in Hawaiian")
     public String hola() {
         String hostname = servletRequest.getServerName(); 
-        return String.format("Aloha mai %s", hostname);
+        return String.format("Aloha mai %s\n", hostname);
 
     }
 
