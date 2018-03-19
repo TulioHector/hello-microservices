@@ -11,6 +11,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
+import org.eclipse.microprofile.faulttolerance.Fallback;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -19,29 +21,46 @@ import io.swagger.annotations.ApiOperation;
 @ApplicationScoped
 public class APIGatewayResource {
 
-    @Inject
-    private AlohaService alohaService;
+	// TODO inject this using CDI
 
-    @Inject
-    private HolaService holaService;
+	private AlohaService alohaService;
+
+	// TODO inject this using CDI
+
+	private HolaService holaService;
 
 	@GET
-    @Path("/es")
-    @Produces("text/plain")
-    @ApiOperation("Returns the greeting in Spanish")
-    public String hola() {
-        String response = holaService.hola();
+	@Path("/es")
+	@Produces("text/plain")
+	@ApiOperation("Returns the greeting in Spanish")
+	//TODO specify the alohaFallback method as the fallback
+	
+	public String hola() {
+		String response = holaService.hola();
 
-        return response;
-    }
+		return response;
+	}
 
-    @GET
-    @Path("/haw")
-    @Produces("text/plain")
-    @ApiOperation("Returns the greeting in Hawaiian")
-    public String aloha() {
-        String response = alohaService.aloha();
+	@GET
+	@Path("/haw")
+	@Produces("text/plain")
+	@ApiOperation("Returns the greeting in Hawaiian")
+	//TODO specify the alohaFallback method as the fallback
+	
+	public String aloha() {
+		String response = alohaService.aloha();
 
-        return response;
-    }
+		return response;
+	}
+
+	@SuppressWarnings("unused")
+	private String alohaFallback() {
+		return "Aloha fallback";
+		
+	}
+	@SuppressWarnings("unused")
+	private String holaFallback() {
+		return "Hola fallback";
+		
+	}
 }

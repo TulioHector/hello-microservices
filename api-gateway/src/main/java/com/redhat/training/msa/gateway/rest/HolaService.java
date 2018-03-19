@@ -6,9 +6,12 @@ import javax.ws.rs.Produces;
 
 public interface HolaService {
 
-	@Path("hola")
-	@Produces("text/plain")
-	@GET
+	//TODO specify the path as 'hola'
+
+	//TODO specify that this method produces content with a content-type of 'text/plain'
+
+	//TODO specify this method maps to HTTP GET requests
+
 	public String hola();
-	
+
 }

@@ -2,7 +2,6 @@ package com.redhat.training.msa.gateway.client;
 
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
@@ -17,10 +16,10 @@ import com.redhat.training.msa.gateway.rest.HolaService;
 public class ClientConfiguration {
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ClientConfiguration.class);
 
-    @Inject
+  @Inject
 	@ConfigProperty(name = "alohaPort")
 	private String alohaPort;
-	
+
 	@Inject
 	@ConfigProperty(name = "alohaHostname")
 	private String alohaHostname;
@@ -28,31 +27,31 @@ public class ClientConfiguration {
 	@Inject
 	@ConfigProperty(name = "holaPort")
 	private String holaPort;
-	
+
 	@Inject
 	@ConfigProperty(name = "holaHostname")
 	private String holaHostname;
 
 
 	@Produces
-	@Singleton
 	public AlohaService alohaService() {
 		Client client = ClientBuilder.newClient();
 		WebTarget target = client.target("http://" + alohaHostname + ":" + alohaPort + "/api");
 		log.info("Aloha service is located at " + target.getUri());
 		ResteasyWebTarget rtarget = (ResteasyWebTarget) target;
-		AlohaService service = rtarget.proxy(AlohaService.class);
+    //TODO create the service using the proxy interface
+		AlohaService service = null;
 		return service;
 	}
 
 	@Produces
-	@Singleton
 	public HolaService holaService() {
 		Client client = ClientBuilder.newClient();
 		WebTarget target = client.target("http://" + holaHostname + ":" + holaPort + "/api");
 		log.info("Hola service is located at " + target.getUri());
 		ResteasyWebTarget rtarget = (ResteasyWebTarget) target;
-		HolaService service = rtarget.proxy(HolaService.class);
+    //TODO create the service using the proxy interface
+    HolaService service = null;
 		return service;
 	}
 }
