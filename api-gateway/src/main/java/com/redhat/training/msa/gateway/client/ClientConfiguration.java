@@ -40,7 +40,7 @@ public class ClientConfiguration {
 		log.info("Aloha service is located at " + target.getUri());
 		ResteasyWebTarget rtarget = (ResteasyWebTarget) target;
     //TODO create the service using the proxy interface
-		AlohaService service = null;
+		AlohaService service = rtarget.proxy(AlohaService.class);;
 		return service;
 	}
 
@@ -51,7 +51,7 @@ public class ClientConfiguration {
 		log.info("Hola service is located at " + target.getUri());
 		ResteasyWebTarget rtarget = (ResteasyWebTarget) target;
     //TODO create the service using the proxy interface
-    HolaService service = null;
+    HolaService service = rtarget.proxy(HolaService.class);;
 		return service;
 	}
 }

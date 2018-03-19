@@ -22,11 +22,11 @@ import io.swagger.annotations.ApiOperation;
 public class APIGatewayResource {
 
 	// TODO inject this using CDI
-
+	@Inject
 	private AlohaService alohaService;
 
 	// TODO inject this using CDI
-
+	@Inject
 	private HolaService holaService;
 
 	@GET
@@ -34,7 +34,7 @@ public class APIGatewayResource {
 	@Produces("text/plain")
 	@ApiOperation("Returns the greeting in Spanish")
 	//TODO specify the alohaFallback method as the fallback
-	
+	@Fallback(fallbackMethod="holaFallback")
 	public String hola() {
 		String response = holaService.hola();
 
@@ -46,7 +46,7 @@ public class APIGatewayResource {
 	@Produces("text/plain")
 	@ApiOperation("Returns the greeting in Hawaiian")
 	//TODO specify the alohaFallback method as the fallback
-	
+	@Fallback(fallbackMethod="alohaFallback")
 	public String aloha() {
 		String response = alohaService.aloha();
 
@@ -56,11 +56,11 @@ public class APIGatewayResource {
 	@SuppressWarnings("unused")
 	private String alohaFallback() {
 		return "Aloha fallback";
-		
+
 	}
 	@SuppressWarnings("unused")
 	private String holaFallback() {
 		return "Hola fallback";
-		
+
 	}
 }
