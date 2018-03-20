@@ -33,10 +33,13 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.SecurityContext;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.faulttolerance.Bulkhead;
+import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
+
+import org.eclipse.microprofile.faulttolerance.Timeout;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.eclipse.microprofile.metrics.Counter;
 import org.eclipse.microprofile.metrics.annotation.Metric;
-import org.eclipse.microprofile.metrics.annotation.Timed;
 
 import com.redhat.training.msa.hola.tracing.WithoutTracing;
 
@@ -80,44 +83,47 @@ public class HolaResource {
   public void init() {
   	serverName = servletRequest.getServerName();
   }
+
     
-    /* (non-Javadoc)
+  /* (non-Javadoc)
 	 * @see com.redhat.training.msa.hola.rest.HolaResource#hola()
 	 */
 	@GET
     @Path("/hola")
     @Produces("text/plain")
     @ApiOperation("Returns the greeting in Spanish")
-    @Timed
     @PermitAll
     public String hola() {
    		requestCounter.inc();
-        return String.format("Hola de %s", serverName);
+      return String.format("Hola de %s", serverName);
     }
-	
 	
     /* (non-Javadoc)
 	 * @see com.redhat.training.msa.hola.rest.HolaResource#holaChaining()
 	 */
-	@GET
-  @Path("/hola-chaining")
-  @Produces("application/json")
-  @ApiOperation("Returns the greeting plus the next service in the chain")
-  @PermitAll
-  //TODO Implement the @Timeout with 1000ms
-  //TODO Implement the @CircuitBreaker with 500ms delay, with the 
-  //one as the requestVolumeThreshold and the failureRatio of 0.5
-  public List<String> holaChaining() {
-    requestCounter.inc();
-    List<String> greetings = new ArrayList<>();
-    greetings.add(hola());
-    greetings.add(alohaService.aloha());
-    return greetings;
-   }
+    @Path("/hola-chaining")
+    @Produces("application/json")
+    @ApiOperation("Returns the greeting plus the next service in the chain")
+    @PermitAll
+    //TODO Implement the @Timeout with 1000ms
+	@Timeout(1000)
+    //TODO Implement the @CircuitBreaker with 500ms delay, with the 
+	//one as the requestVolumeThreshold and the failureRatio of 0.5
+	@CircuitBreaker(requestVolumeThreshold = 1,
+    		failureRatio = 0.50, delay = 500)
+    public List<String> holaChaining() {
+    		requestCounter.inc();
+        List<String> greetings = new ArrayList<>();
+        greetings.add(hola());
+        greetings.add(alohaService.aloha());
+        return greetings;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	
+	
+
+	
+  /* (non-Javadoc)
 	 * @see com.redhat.training.msa.hola.rest.HolaResource#secureHola()
 	 */
 	@GET
