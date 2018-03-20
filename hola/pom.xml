@@ -28,18 +28,6 @@
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>microprofile</artifactId>
 		</dependency>
-
-		<!-- <dependency> <groupId>org.wildfly.swarm</groupId> <artifactId>microprofile-health</artifactId> 
-			</dependency> <dependency> <groupId>org.wildfly.swarm</groupId> <artifactId>microprofile-config</artifactId> 
-			</dependency> <dependency> <groupId>org.wildfly.swarm</groupId> <artifactId>microprofile-metrics</artifactId> 
-			</dependency> <dependency> <groupId>org.wildfly.swarm</groupId> <artifactId>microprofile-fault-tolerance</artifactId> 
-			</dependency> <dependency> <groupId>org.wildfly.swarm</groupId> <artifactId>microprofile-jwt</artifactId> 
-			<exclusions> <exclusion> <groupId>com.fasterxml.jackson.core</groupId> <artifactId>jackson-databind</artifactId> 
-			</exclusion> <exclusion> <groupId>com.fasterxml.jackson.core</groupId> <artifactId>jackson-core</artifactId> 
-			</exclusion> </exclusions> </dependency> -->
-		<!-- <dependency> <groupId>org.wildfly.swarm</groupId> <artifactId>swagger-webapp</artifactId> 
-			</dependency> -->
-
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>swagger</artifactId>
@@ -49,21 +37,12 @@
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-client</artifactId>
 			<scope>provided</scope>
-			<!-- <exclusions> <exclusion> <groupId>commons-io</groupId> <artifactId>commons-io</artifactId> 
-				</exclusion> </exclusions> -->
 		</dependency>
 
 		<dependency>
-			<groupId>com.netflix.hystrix</groupId>
-			<artifactId>hystrix-core</artifactId>
-			<version>${hystrix.version}</version>
+			<groupId>org.wildfly.swarm</groupId>
+			<artifactId>ribbon</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>com.netflix.hystrix</groupId>
-			<artifactId>hystrix-metrics-event-stream</artifactId>
-			<version>${hystrix.version}</version>
-		</dependency>
-
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>jaeger</artifactId>
@@ -83,10 +62,6 @@
 		</dependency>
 
 
-		<!-- OpenTracing -->
-		<!-- <dependency> <groupId>io.opentracing</groupId> <artifactId>opentracing-noop</artifactId> 
-			</dependency> <dependency> <groupId>io.opentracing.contrib</groupId> <artifactId>opentracing-web-servlet-filter</artifactId> 
-			</dependency> -->
 
 		<!-- OpenTracing implementation - Jaeger -->
 		<dependency>
@@ -120,19 +95,12 @@
 			<artifactId>wiremock</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- <dependency> <groupId>com.netflix.hystrix</groupId> <artifactId>hystrix-core</artifactId> 
-			</dependency> <dependency> <groupId>com.netflix.hystrix</groupId> <artifactId>hystrix-metrics-event-stream</artifactId> 
-			<version>${version.hystrix}</version> </dependency> <dependency> <groupId>com.netflix.hystrix</groupId> 
-			<artifactId>hystrix-serialization</artifactId> <version>${version.hystrix}</version> 
-			</dependency> -->
+
 		<dependency>
 			<groupId>org.keycloak</groupId>
 			<artifactId>keycloak-core</artifactId>
 			<version>${version.keycloak}</version>
 			<scope>test</scope>
-			<!-- <exclusions> <exclusion> <groupId>com.fasterxml.jackson.core</groupId> 
-				<artifactId>jackson-databind</artifactId> </exclusion> <exclusion> <groupId>com.fasterxml.jackson.core</groupId> 
-				<artifactId>jackson-core</artifactId> </exclusion> </exclusions> -->
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -142,8 +110,7 @@
 		<dependency>
 			<groupId>com.nimbusds</groupId>
 			<artifactId>nimbus-jose-jwt</artifactId>
-			<!-- <exclusions> <exclusion> <groupId>commons-io</groupId> <artifactId>commons-io</artifactId> 
-				</exclusion> </exclusions> -->
+
 		</dependency>
 	</dependencies>
 
