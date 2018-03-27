@@ -7,10 +7,13 @@ import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 
 @ApplicationScoped
-//Add the @Health annotation
-//Implements the HealthCheck interface
-public class HolaHealth  {
+@Health
+public class HolaHealth implements HealthCheck {
 
-	//Implement the call() method
+	@Override
+	public HealthCheckResponse call() {
+		return HealthCheckResponse.named("hola service")
+				.up().build();
+	}
 
 }
