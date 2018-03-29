@@ -26,20 +26,17 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>microprofile-health</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>microprofile-config</artifactId>
+			<artifactId>microprofile</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>swagger</artifactId>
 		</dependency>
-		<dependency>
+<!--		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>swagger-webapp</artifactId>
-		</dependency>
+		</dependency> -->
+
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-client</artifactId>
@@ -78,6 +75,7 @@
 			<groupId>com.github.tomakehurst</groupId>
 			<artifactId>wiremock-standalone</artifactId>
 			<scope>test</scope>
+			<version>${version.wiremock}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
