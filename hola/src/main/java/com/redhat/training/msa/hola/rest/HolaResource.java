@@ -38,6 +38,7 @@ import javax.ws.rs.core.SecurityContext;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.faulttolerance.Bulkhead;
 import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
+import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.faulttolerance.Timeout;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.eclipse.microprofile.metrics.Counter;
@@ -116,6 +117,7 @@ public class HolaResource {
     @Produces("application/json")
     @ApiOperation("Returns the greeting plus the next service in the chain")
     @PermitAll
+    @Fallback(fallbackMethod = "alohaFallback")
     @Timeout(1000)
     @CircuitBreaker(requestVolumeThreshold = 1,
             failureRatio = 0.50, delay = 500)
