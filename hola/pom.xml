@@ -24,10 +24,8 @@
 	<description>Spanish Hello microservice</description>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>microprofile</artifactId>
-		</dependency>
+		<!-- add the microprofile dependency -->
+
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>swagger</artifactId>

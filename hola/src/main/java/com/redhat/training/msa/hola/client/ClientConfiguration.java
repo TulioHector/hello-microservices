@@ -14,13 +14,12 @@ import com.redhat.training.msa.hola.rest.AlohaService;
 import com.redhat.training.msa.hola.tracing.WithoutTracing;
 
 public class ClientConfiguration {
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ClientConfiguration.class);
-    @Inject
-	@ConfigProperty(name = "alohaPort")
+        private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ClientConfiguration.class);
+	
+        //Inject the alohaPort property.
 	private String alohaPort;
 	
-	@Inject
-	@ConfigProperty(name = "alohaHostname")
+	//Inject the alohaHostname property.
 	private String alohaHostname;
 
 	@Produces
