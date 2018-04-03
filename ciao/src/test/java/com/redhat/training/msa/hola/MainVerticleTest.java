@@ -1,4 +1,4 @@
-package com.redhat.training.msa.hello;
+package com.redhat.training.msa.hola;
 
 import org.junit.After;
 import org.junit.Before;
