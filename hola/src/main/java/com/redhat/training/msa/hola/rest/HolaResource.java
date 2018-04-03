@@ -65,65 +65,52 @@ public class HolaResource {
 
 	private String serverName;
 
+	@Inject
+	@ConfigProperty(name = "alohaHostname")
+	private String hostname;
+
+	@Inject
+	@ConfigProperty(name = "alohaPort")
+	private String port;
+
 	@PostConstruct
 	public void init() {
 		serverName = servletRequest.getServerName();
-	}	
-	
-  @Inject
-  @ConfigProperty(name="alohaHostname")
-  private String hostname;
-  
-  @Inject
-  @ConfigProperty(name="alohaPort")
-  private String port;
+	}
 
-    
-  @PostConstruct
-  public void init() {
-  	serverName = servletRequest.getServerName();
-  }
-
-    
-  /* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.redhat.training.msa.hola.rest.HolaResource#hola()
 	 */
 	@GET
-    @Path("/hola")
-    @Produces("text/plain")
-    @ApiOperation("Returns the greeting in Spanish")
-    @PermitAll
-    public String hola() {
-   		requestCounter.inc();
-      return String.format("Hola de %s", serverName);
-    }
-	
-    /* (non-Javadoc)
+	@Path("/hola")
+	@Produces("text/plain")
+	@ApiOperation("Returns the greeting in Spanish")
+	@PermitAll
+	public String hola() {
+		return String.format("Hola de %s", serverName);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.redhat.training.msa.hola.rest.HolaResource#holaChaining()
 	 */
-    @Path("/hola-chaining")
-    @Produces("application/json")
-    @ApiOperation("Returns the greeting plus the next service in the chain")
-    @PermitAll
-    //TODO Implement the @Timeout with 1000ms
-	@Timeout(1000)
-    //TODO Implement the @CircuitBreaker with 500ms delay, with the 
-	//one as the requestVolumeThreshold and the failureRatio of 0.5
-	@CircuitBreaker(requestVolumeThreshold = 1,
-    		failureRatio = 0.50, delay = 500)
-    public List<String> holaChaining() {
-    		requestCounter.inc();
-        List<String> greetings = new ArrayList<>();
-        greetings.add(hola());
-        greetings.add(alohaService.aloha());
-        return greetings;
-    }
+	@Path("/hola-chaining")
+	@Produces("application/json")
+	@ApiOperation("Returns the greeting plus the next service in the chain")
+	@PermitAll
+	public List<String> holaChaining() {
+		List<String> greetings = new ArrayList<>();
+		greetings.add(hola());
+		greetings.add(alohaService.aloha());
+		return greetings;
+	}
 
-	
-	
-
-	
-  /* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.redhat.training.msa.hola.rest.HolaResource#secureHola()
 	 */
 	@GET
