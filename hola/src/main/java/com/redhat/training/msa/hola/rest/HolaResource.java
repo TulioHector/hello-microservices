@@ -121,10 +121,6 @@ public class HolaResource {
         return greetings;
     }
 
-
-
-
-
     /* (non-Javadoc)
      * @see com.redhat.training.msa.hola.rest.HolaResource#secureHola()
      */
@@ -149,4 +145,5 @@ public class HolaResource {
         greetings.add("Aloha fallback");
         return greetings;
     }
+
 }
