@@ -1,4 +1,4 @@
-package com.redhat.training.msa.hola;
+package com.redhat.training.msa.gateway;
 
 import java.io.File;
 import java.util.Properties;
