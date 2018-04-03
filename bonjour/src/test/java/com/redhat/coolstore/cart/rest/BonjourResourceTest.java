@@ -1,4 +1,4 @@
-package com.redhat.coolstore.cart.rest;
+package com.redhat.training.msa.hola;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
