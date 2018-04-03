@@ -17,9 +17,13 @@ public class ClientConfiguration {
         private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ClientConfiguration.class);
 	
         //Inject the alohaPort property.
+	@Inject
+        @ConfigProperty(name = "alohaPort", defaultValue="9090")
 	private String alohaPort;
 	
 	//Inject the alohaHostname property.
+	@Inject
+	@ConfigProperty(name = "alohaHostname", defaultValue="alohahost")
 	private String alohaHostname;
 
 	@Produces

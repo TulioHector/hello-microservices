@@ -25,6 +25,10 @@
 
 	<dependencies>
 		<!-- add the microprofile dependency -->
+		<dependency>
+   			<groupId>org.eclipse.microprofile</groupId>
+   			<artifactId>microprofile</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
