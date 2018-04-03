@@ -1,4 +1,4 @@
-package com.redhat.training.msa.hola.rest;
+package com.redhat.training.msa.gateway.rest;
 
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
@@ -18,7 +18,7 @@ import org.wildfly.swarm.Swarm;
 import org.wildfly.swarm.arquillian.CreateSwarm;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
-import com.redhat.training.msa.hola.ArquillianTestUtils;
+import com.redhat.training.msa.gateway.ArquillianTestUtils;
 @RunWith(Arquillian.class)
 public class APIGatewayResourceTest {
 	
