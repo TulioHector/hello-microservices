@@ -53,108 +53,104 @@ import io.swagger.annotations.ApiOperation;
 
 @Path("/")
 @Api("hola")
-@DeclareRoles({"VIP", "Voter"})
+@DeclareRoles({ "VIP", "Voter" })
 
 @ApplicationScoped
 public class HolaResource {
 
-    @Inject
-    @WithoutTracing
-    private AlohaService alohaService;
+	@Inject
+	@WithoutTracing
+	private AlohaService alohaService;
 
-    @Context
-    private SecurityContext securityContext;
+	@Context
+	private SecurityContext securityContext;
 
-    @Context
-    private HttpServletRequest servletRequest;
+	@Context
+	private HttpServletRequest servletRequest;
 
-    private String serverName;
+	private String serverName;
 
-    @Inject
-    @Metric(name = "requestCount", description = "Total endpoint requests made to the Hola microservice",
-            displayName="HolaResource#requestCount", absolute=true)
-    private Counter requestCounter;
+	@Inject
+	@Metric(name = "requestCount", description = "Total endpoint requests made to the Hola microservice", displayName = "HolaResource#requestCount", absolute = true)
+	private Counter requestCounter;
 
-    @Inject
-    @Metric(name = "failureCount", description = "Total chained endpoint failures encountered",
-            displayName="HolaResource#failureCount", absolute=true)
-    private Counter failedCount;
+	@Inject
+	@Metric(name = "failureCount", description = "Total chained endpoint failures encountered", displayName = "HolaResource#failureCount", absolute = true)
+	private Counter failedCount;
 
+	@Inject
+	@ConfigProperty(name = "alohaHostname")
+	private String hostname;
 
-    @Inject
-    @ConfigProperty(name="alohaHostname")
-    private String hostname;
+	@Inject
+	@ConfigProperty(name = "alohaPort")
+	private String port;
 
-    @Inject
-    @ConfigProperty(name="alohaPort")
-    private String port;
+	@PostConstruct
+	public void init() {
+		serverName = servletRequest.getServerName();
+	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.redhat.training.msa.hola.rest.HolaResource#hola()
+	 */
+	@GET
+	@Path("/hola")
+	@Produces("text/plain")
+	@ApiOperation("Returns the greeting in Spanish")
+	@PermitAll
+	public String hola() {
+		requestCounter.inc();
 
-    @PostConstruct
-    public void init() {
-        serverName = servletRequest.getServerName();
-    }
+		return String.format("Hola de %s", hostname);
+	}
 
-    /* (non-Javadoc)
-     * @see com.redhat.training.msa.hola.rest.HolaResource#hola()
-     */
-    @GET
-    @Path("/hola")
-    @Produces("text/plain")
-    @ApiOperation("Returns the greeting in Spanish")
-    @PermitAll
-    public String hola() {
-        requestCounter.inc();
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.redhat.training.msa.hola.rest.HolaResource#holaChaining()
+	 */
+	@GET
+	@Path("/hola-chaining")
+	@Produces("application/json")
+	@ApiOperation("Returns the greeting plus the next service in the chain")
+	@PermitAll
+	// TODO Implement the @Timeout with 1000ms
+	@Timeout(1000)
+	// TODO Implement the @CircuitBreaker with 500ms delay, with the
+	// one as the requestVolumeThreshold and the failureRatio of 0.5
+	@CircuitBreaker(requestVolumeThreshold = 1, failureRatio = 0.50, delay = 500)
+	public List<String> holaChaining() {
+		requestCounter.inc();
+		List<String> greetings = new ArrayList<>();
+		greetings.add(hola());
+		greetings.add(alohaService.aloha());
+		return greetings;
+	}
 
-        return String.format("Hola de %s", hostname);
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.redhat.training.msa.hola.rest.HolaResource#secureHola()
+	 */
+	@GET
+	@Path("/hola-secure")
+	@Produces("application/json")
+	@RolesAllowed({ "VIP", "Voter" })
+	public SecurePackage secureHola() {
+		boolean isVIP = securityContext.isUserInRole("VIP");
+		JsonWebToken token = (JsonWebToken) securityContext.getUserPrincipal();
+		return new SecurePackage(token.getName(), new Date(token.getExpirationTime() * 1000).toString(), isVIP);
+	}
 
-    /* (non-Javadoc)
-     * @see com.redhat.training.msa.hola.rest.HolaResource#holaChaining()
-     */
-    @GET
-    @Path("/hola-chaining")
-    @Produces("application/json")
-    @ApiOperation("Returns the greeting plus the next service in the chain")
-    @PermitAll
-    @Fallback(fallbackMethod = "alohaFallback")
-    @Timeout(1000)
-    @CircuitBreaker(requestVolumeThreshold = 1,
-            failureRatio = 0.50, delay = 500)
-    public List<String> holaChaining() {
-        requestCounter.inc();
-        List<String> greetings = new ArrayList<>();
-        greetings.add(hola());
-        greetings.add(alohaService.aloha());
-        return greetings;
-    }
-
-
-
-
-
-    /* (non-Javadoc)
-     * @see com.redhat.training.msa.hola.rest.HolaResource#secureHola()
-     */
-    @GET
-    @Path("/hola-secure")
-    @Produces("application/json")
-    @RolesAllowed({"VIP", "Voter"})
-    public SecurePackage secureHola() {
-        boolean isVIP = securityContext.isUserInRole("VIP");
-        JsonWebToken token = (JsonWebToken) securityContext.getUserPrincipal();
-        return new SecurePackage(token.getName(), new Date(token.getExpirationTime() * 1000).toString(), isVIP);
-    }
-
-
-
-
-    @SuppressWarnings("unused")
-    private List<String> alohaFallback() {
-        failedCount.inc();
-        List<String> greetings = new ArrayList<>();
-        greetings.add(hola());
-        greetings.add("Aloha fallback");
-        return greetings;
-    }
+	@SuppressWarnings("unused")
+	private List<String> alohaFallback() {
+		failedCount.inc();
+		List<String> greetings = new ArrayList<>();
+		greetings.add(hola());
+		greetings.add("Aloha fallback");
+		return greetings;
+	}
 }
