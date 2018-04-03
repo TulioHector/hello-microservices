@@ -117,10 +117,9 @@ public class HolaResource {
     @Produces("application/json")
     @ApiOperation("Returns the greeting plus the next service in the chain")
     @PermitAll
-    @Fallback(fallbackMethod = "alohaFallback")
-    @Timeout(1000)
-    @CircuitBreaker(requestVolumeThreshold = 1,
-            failureRatio = 0.50, delay = 500)
+  //TODO Implement the @Timeout with 1000ms
+  //TODO Implement the @CircuitBreaker with 500ms delay, with the
+  //one as the requestVolumeThreshold and the failureRatio of 0.5
     public List<String> holaChaining() {
         requestCounter.inc();
         List<String> greetings = new ArrayList<>();
