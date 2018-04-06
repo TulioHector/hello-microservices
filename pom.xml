@@ -186,6 +186,8 @@
 		<module>bonjour</module>
 		<module>ciao</module>
 		<module>api-gateway</module>
+		<module>authz</module>
+		
 	</modules>
 
 </project>
