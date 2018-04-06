@@ -10,6 +10,7 @@ swarm:
             roles-lm-stack:
               login-modules:
                 - login-module: rm
+# TODO use the org.wildfly.swarm.microprofile.jwtauth.deployment.auth.jaas.JWTLoginModule login module
                   code: org.wildfly.swarm.microprofile.jwtauth.deployment.auth.jaas.JWTLoginModule
                   flag: required
                   module-options:

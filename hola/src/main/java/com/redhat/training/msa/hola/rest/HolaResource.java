@@ -61,7 +61,7 @@ public class HolaResource {
     @Inject
     @WithoutTracing
     private AlohaService alohaService;
-
+    //TODO Inject the securityContext 
     @Context
     private SecurityContext securityContext;
 
@@ -135,11 +135,16 @@ public class HolaResource {
     @GET
     @Path("/hola-secure")
     @Produces("application/json")
-    @RolesAllowed({"VIP", "Voter"})
+  //TODO Allow only roles with Alumni to access this method
+    @RolesAllowed("Alumni")
     public SecurePackage secureHola() {
-        boolean isVIP = securityContext.isUserInRole("VIP");
+    	  //TODO GET JWT 
         JsonWebToken token = (JsonWebToken) securityContext.getUserPrincipal();
-        return new SecurePackage(token.getName(), new Date(token.getExpirationTime() * 1000).toString(), isVIP);
+        //TODO GET the user name from the JWT
+        String username = token.getName();
+        //TODO GET the expiration time from the JWT
+		long expirationTime = token.getExpirationTime();
+		return new SecurePackage(username, new Date(expirationTime * 1000).toString(), true);
     }
 
 
