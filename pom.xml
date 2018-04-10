@@ -181,6 +181,7 @@
 	</dependencies>
 
 	<modules>
+		<module>authz</module>
 		<module>hola</module>
 		<module>aloha</module>
 		<module>bonjour</module>
