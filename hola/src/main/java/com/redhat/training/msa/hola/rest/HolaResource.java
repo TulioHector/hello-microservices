@@ -137,8 +137,8 @@ public class HolaResource {
 
 	
     /* (non-Javadoc)
-	 * @see com.redhat.training.msa.hola.rest.HolaResource#secureHola()
-	 */
+     * 
+     */
 	@GET
     @Path("/hola-secure")
     @Produces("application/json")
