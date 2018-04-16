@@ -34,9 +34,11 @@ public class CiaoServiceEBProxyTest {
     public void ciaoProxyTest(TestContext testContext) {
         final Async async = testContext.async();
       
-        CiaoService serviceImpl = new CiaoServiceImpl();        
-  	    ProxyHelper.registerService(CiaoService.class, vertx, serviceImpl, ADDRESS);
-  	    CiaoService proxy = new CiaoServiceVertxEBProxy(vertx, ADDRESS);
+        //TODO: uncomment the following lines, and remove the line after the comment
+        //CiaoService serviceImpl = new CiaoServiceImpl();        
+  	    //ProxyHelper.registerService(CiaoService.class, vertx, serviceImpl, ADDRESS);
+  	    //CiaoService proxy = new CiaoServiceVertxEBProxy(vertx, ADDRESS);
+        CiaoService proxy = null;
   	
         final String host = "corleone.example.com";
         final String nome = "Michael";
