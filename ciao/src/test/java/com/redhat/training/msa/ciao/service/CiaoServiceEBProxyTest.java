@@ -11,9 +11,10 @@ import io.vertx.core.Vertx;
 import io.vertx.ext.unit.Async;
 import io.vertx.ext.unit.TestContext;
 import io.vertx.ext.unit.junit.VertxUnitRunner;
+import io.vertx.serviceproxy.ProxyHelper;
 
 @RunWith(VertxUnitRunner.class)
-public class CiaoServiceTest {
+public class CiaoServiceEBProxyTest {
 
     private Vertx vertx;
 
@@ -29,19 +30,23 @@ public class CiaoServiceTest {
         vertx.close(testContext.asyncAssertSuccess());
     }
 
+    final static String ADDRESS = "ciao-service";
+
     @Test
-    public void ciaoImplTest(TestContext testContext) {
+    public void ciaoImplProxy(TestContext testContext) {
         final Async async = testContext.async();
-        
-        CiaoService service = new CiaoServiceImpl();
-        
+      
+        CiaoService serviceImpl = new CiaoServiceImpl();        
+  	    ProxyHelper.registerService(CiaoService.class, vertx, serviceImpl, ADDRESS);
+  	    CiaoService proxy = new CiaoServiceVertxEBProxy(vertx, ADDRESS);
+  	
         final String host = "corleone.example.com";
-        final String nome = "Vito";
-        service.ciao(host, nome, ar -> {
-        	String msg = ar.result();
-        	testContext.assertTrue(msg.contains("Ciao"));
+        final String nome = "Michael";
+        proxy.ciao(host, nome, ar -> {
+      	    String msg = ar.result();
+      	    testContext.assertTrue(msg.contains("Ciao"));
             testContext.assertTrue(msg.contains(nome));
-        	testContext.assertTrue(msg.contains(host));
+      	    testContext.assertTrue(msg.contains(host));
             async.complete();
         });
     }
