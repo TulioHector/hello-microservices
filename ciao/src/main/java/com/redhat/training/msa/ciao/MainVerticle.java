@@ -28,6 +28,7 @@ public class MainVerticle extends AbstractVerticle {
     public void start(Future<Void> future) {
 
         LOG.info("Welcome to Vertx. Starting Ciao service...");
+        
         registerCiaoService();
 
         Router router = Router.router(vertx);
@@ -50,6 +51,8 @@ public class MainVerticle extends AbstractVerticle {
     final static String ADDRESS = "ciao-service";
     
     private void registerCiaoService() {
+        LOG.info("Registering ciao service to the event bus...");
+        
     	CiaoService serviceImpl = new CiaoServiceImpl();        
     	ProxyHelper.registerService(CiaoService.class, vertx, serviceImpl, ADDRESS);
     	ebProxy = new CiaoServiceVertxEBProxy(vertx, ADDRESS);
@@ -58,6 +61,8 @@ public class MainVerticle extends AbstractVerticle {
     private void ciao(RoutingContext rc) {
     	String nome = rc.request().getParam("nome");
         String host = rc.request().host();
+        
+        LOG.info("Got API request for nome = '" + nome + "' ...");
         
         ebProxy.ciao(host, nome, ar -> {
         	rc.response().end(ar.result());
