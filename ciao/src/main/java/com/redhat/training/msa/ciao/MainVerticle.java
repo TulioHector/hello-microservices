@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 
 import com.redhat.training.msa.ciao.service.CiaoService;
 import com.redhat.training.msa.ciao.service.CiaoServiceImpl;
-import com.redhat.training.msa.ciao.service.CiaoServiceVertxEBProxy;
 
 public class MainVerticle extends AbstractVerticle {
 
@@ -32,12 +31,10 @@ public class MainVerticle extends AbstractVerticle {
         registerCiaoService();
 
         Router router = Router.router(vertx);
-        router.get("/api/ciao/:nome")
-            .produces("application/text")
-            .handler(this::ciao);
+        //TODO: add the /api/ciao/:name API entry point
 
+        //TODO: add the Router as request handler for the HTTP server
         vertx.createHttpServer()
-            .requestHandler(router::accept)
             .listen(8080, result -> {
                 if (result.succeeded()) {
                     future.complete();
@@ -53,9 +50,9 @@ public class MainVerticle extends AbstractVerticle {
     private void registerCiaoService() {
         LOG.info("Registering ciao service to the event bus...");
         
-    	CiaoService serviceImpl = new CiaoServiceImpl();        
-    	ProxyHelper.registerService(CiaoService.class, vertx, serviceImpl, ADDRESS);
-    	ebProxy = new CiaoServiceVertxEBProxy(vertx, ADDRESS);
+    	//TODO: instantiate the service implementation
+        //TODO: register the service implementation to the event bus
+        //TODO: instantiate an event bus proxy for the service
     }
     
     private void ciao(RoutingContext rc) {
@@ -64,9 +61,8 @@ public class MainVerticle extends AbstractVerticle {
         
         LOG.info("Got API request for nome = '" + nome + "' ...");
         
-        ebProxy.ciao(host, nome, ar -> {
-        	rc.response().end(ar.result());
-        });
+        //TODO: invoke the ciao service using the event bus proxy
+        //TODO: use the service return value as the request respose data
     }
 
 }
