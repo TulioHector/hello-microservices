@@ -30,7 +30,7 @@ public class CiaoServiceEBProxyTest {
 
     final static String ADDRESS = "ciao-service";
 
-    @Test
+    @Test(timeout=3000)
     public void ciaoImplProxy(TestContext testContext) {
         final Async async = testContext.async();
       

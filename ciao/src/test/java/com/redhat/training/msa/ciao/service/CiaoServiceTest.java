@@ -27,7 +27,7 @@ public class CiaoServiceTest {
         vertx.close(testContext.asyncAssertSuccess());
     }
 
-    @Test
+    @Test(timeout=3000)
     public void ciaoImplTest(TestContext testContext) {
         final Async async = testContext.async();
         
