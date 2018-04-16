@@ -31,7 +31,7 @@ public class CiaoServiceEBProxyTest {
     final static String ADDRESS = "ciao-service";
 
     @Test(timeout=3000)
-    public void ciaoImplProxy(TestContext testContext) {
+    public void ciaoProxyTest(TestContext testContext) {
         final Async async = testContext.async();
       
         CiaoService serviceImpl = new CiaoServiceImpl();        
