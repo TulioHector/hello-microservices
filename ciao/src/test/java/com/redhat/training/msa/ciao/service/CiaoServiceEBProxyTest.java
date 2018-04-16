@@ -21,8 +21,6 @@ public class CiaoServiceEBProxyTest {
     @Before
     public void setup(TestContext testContext) {
         vertx = Vertx.vertx();
-
-        vertx.deployVerticle(MainVerticle.class.getName(), testContext.asyncAssertSuccess());
     }
 
     @After
