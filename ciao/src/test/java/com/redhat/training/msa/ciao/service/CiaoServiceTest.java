@@ -20,8 +20,6 @@ public class CiaoServiceTest {
     @Before
     public void setup(TestContext testContext) {
         vertx = Vertx.vertx();
-
-        vertx.deployVerticle(MainVerticle.class.getName(), testContext.asyncAssertSuccess());
     }
 
     @After
