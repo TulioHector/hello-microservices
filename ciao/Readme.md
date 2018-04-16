@@ -16,6 +16,11 @@ Build and Deploy ciao locally
 
 4. The application will be running at the following URL: <http://localhost:8080/api/ciao>
 
+5. Test the application using any resource path after 'ciao' for example:
+
+	curl http://localhost:8080/api/ciao/Mario
+
+
 Deploy the application in OpenShift
 -----------------------------------
 

@@ -1,11 +1,11 @@
-package com.redhat.training.msa.hola;
+package com.redhat.training.msa.ciao;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.redhat.training.msa.hello.MainVerticle;
+import com.redhat.training.msa.ciao.MainVerticle;
 
 import io.vertx.core.Vertx;
 import io.vertx.ext.unit.Async;
@@ -30,14 +30,15 @@ public class MainVerticleTest {
     }
 
     @Test
-    public void sayHelloTest(TestContext testContext) {
+    public void ciaoTest(TestContext testContext) {
         final Async async = testContext.async();
 
         vertx.createHttpClient()
-                .getNow(8080, "localhost", "/api/ciao", response -> {
+                .getNow(8080, "localhost", "/api/ciao/Luigi", response -> {
                     response.handler(responseBody -> {
-                        testContext.assertTrue(responseBody.toString()
-                                .contains("Ciao"));
+                    	String body = responseBody.toString();
+                        testContext.assertTrue(body.contains("Ciao"));
+                        testContext.assertTrue(body.contains("Luigi"));
                         async.complete();
                     });
                 });

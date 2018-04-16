@@ -10,19 +10,21 @@
 	the specific language governing permissions and limitations under the License. -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
+
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
     <groupId>com.redhat.training.msa</groupId>
     <artifactId>msa-parent</artifactId>
     <version>1.0</version>
   </parent>
-	<artifactId>ciao</artifactId>
-	<packaging>jar</packaging>
-	<name>Red Hat Training MSA: Ciao Vert.x App</name>
-	<description>Vert.x Ciao Italian microservice</description>
 
-	<properties>
-    <vertx.verticle>com.redhat.training.msa.hello.MainVerticle</vertx.verticle>
+  <artifactId>ciao</artifactId>
+  <packaging>jar</packaging>
+  <name>Red Hat Training MSA: Ciao Vert.x App</name>
+  <description>Vert.x Ciao Italian microservice</description>
+
+  <properties>
+    <vertx.verticle>com.redhat.training.msa.ciao.MainVerticle</vertx.verticle>
   </properties>
 
   <dependencies>
@@ -33,6 +35,14 @@
     <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-codegen</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-service-proxy</artifactId>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -57,35 +67,60 @@
    </dependency>
   </dependencies>
 
-	<build>
-    <plugins>
-      <plugin>
-        <groupId>io.fabric8</groupId>
-        <artifactId>vertx-maven-plugin</artifactId>
-        <version>${version.vertx-maven-plugin}</version>
-         <executions>
-           <execution>
-            <id>vmp</id>
-             <goals>
-              <goal>package</goal>
-             </goals>
-           </execution>
-         </executions>
-      </plugin>
-			<plugin>
-				<groupId>io.fabric8</groupId>
-				<artifactId>fabric8-maven-plugin</artifactId>
-				<version>${version.fabric8.plugin}</version>
-				<executions>
-					<execution>
-						<id>fmp</id>
-						<goals>
-							<goal>resource</goal>
-							<goal>build</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-    </plugins>
+  <build>
+  <plugins>
+    <plugin>
+      <artifactId>maven-compiler-plugin</artifactId>
+      <version>${version.compiler.plugin}</version>
+      <configuration>
+        <annotationProcessors>
+          <annotationProcessor>
+             io.vertx.codegen.CodeGenProcessor
+          </annotationProcessor>
+        </annotationProcessors>
+        <generatedSourcesDirectory>
+          ${project.basedir}/src/main/generated
+        </generatedSourcesDirectory>
+      </configuration>
+    </plugin>
+    <plugin>
+      <artifactId>maven-clean-plugin</artifactId>
+      <version>${version.clean.plugin}</version>
+      <configuration>
+        <filesets>
+          <fileset>
+            <directory>src/main/generated</directory>
+          </fileset>
+        </filesets>
+      </configuration>
+    </plugin>
+    <plugin>
+      <groupId>io.fabric8</groupId>
+      <artifactId>vertx-maven-plugin</artifactId>
+      <version>${version.vertx-maven-plugin}</version>
+       <executions>
+         <execution>
+          <id>vmp</id>
+           <goals>
+            <goal>package</goal>
+           </goals>
+         </execution>
+       </executions>
+    </plugin>
+    <plugin>
+      <groupId>io.fabric8</groupId>
+      <artifactId>fabric8-maven-plugin</artifactId>
+      <version>${version.fabric8.plugin}</version>
+      <executions>
+        <execution>
+          <id>fmp</id>
+            <goals>
+            <goal>resource</goal>
+            <goal>build</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+  </plugins>
   </build>
 </project>
