@@ -9,6 +9,6 @@ public class CiaoServiceImpl implements CiaoService {
 	@Override
 	public void ciao(String host, String nome, Handler<AsyncResult<String>> resultHandler) {
 		String msg = "Ciao " + nome +  ", da " + host +"\n";
-		//TODO: return the message to the caller
+		resultHandler.handle(Future.succeededFuture(msg));
 	}
 }
