@@ -112,21 +112,14 @@
       <artifactId>fabric8-maven-plugin</artifactId>
       <version>${version.fabric8.plugin}</version>
       <executions>
-        <execution>
-          <id>fmp</id>
-            <goals>
-            <goal>resource</goal>
-            <goal>build</goal>
-          </goals>
-        </execution>
+        <!--
+        TODO: Add the FMP to the standard Maven life cycle phases
+        -->
       </executions>
       <configuration>
-        <generator>
-          <config>
-            <vertx>
-            </vertx>
-          </config>
-        </generator>
+        <!--
+        TODO: Configure the FMP to use the Vert.x generator
+        -->
       </configuration>
     </plugin>
   </plugins>
