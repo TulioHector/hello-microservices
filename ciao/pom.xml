@@ -120,6 +120,14 @@
           </goals>
         </execution>
       </executions>
+      <configuration>
+        <generator>
+          <config>
+            <vertx>
+            </vertx>
+          </config>
+        </generator>
+      </configuration>
     </plugin>
   </plugins>
   </build>
