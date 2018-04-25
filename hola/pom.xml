@@ -82,21 +82,7 @@
 			</plugin>
 			<!-- The WildFly Swarm plugin creates an uber jar -->
 			<!-- To use, run: mvn wildfly-swarm:run -->
-			<plugin>
-				<groupId>org.wildfly.swarm</groupId>
-				<artifactId>wildfly-swarm-plugin</artifactId>
-				<version>${version.wildfly.swarm}</version>
-				<configuration>
-					<useUberJar>true</useUberJar>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>package</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+      <!-- TODO: Enable and configure the Maven Wildfly Swarm plugin-->
 		</plugins>
 	</build>
 
