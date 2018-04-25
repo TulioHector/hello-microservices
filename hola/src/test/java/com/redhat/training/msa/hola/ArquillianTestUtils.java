@@ -11,8 +11,6 @@ import org.jboss.shrinkwrap.resolver.api.maven.ScopeType;
 import org.wildfly.swarm.Swarm;
 
 public class ArquillianTestUtils {
-
-	
 	
 	public static WebArchive deploy() {
 
@@ -23,9 +21,7 @@ public class ArquillianTestUtils {
 		WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "test.war")
 				.addPackages(true, "com.redhat.training.msa")
 				.addAsLibraries(deps)
-				.addAsResource("project-defaults.yml","project-defaults.yml")
-				.addAsWebInfResource(EmptyAsset.INSTANCE,"beans.xml");
-		
+				.addAsResource("project-defaults.yml","project-defaults.yml");		
 		return webArchive;
 	}
 

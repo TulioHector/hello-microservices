@@ -2,3 +2,9 @@
 swarm:
   bind:
     address: localhost
+com:
+  redhat:
+    hola: 
+      config:
+        a: Uno
+        b: 

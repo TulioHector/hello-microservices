@@ -24,26 +24,35 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericType;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Path("/")
-@Api("hola")
 @ApplicationScoped
 public class HolaResource {
+
+    private static final Logger LOG = LoggerFactory.getLogger(HolaResource.class);
 
     @Context
     private HttpServletRequest servletRequest;
 
-    /* (non-Javadoc)
-	 * @see com.redhat.training.msa.hola.rest.HolaResource#hola()
-	 */
+    @Inject
+    @ConfigProperty(name = "com.redhat.hola.config.a", defaultValue="")
+    private String a;
+
+    @Inject
+    @ConfigProperty(name = "com.redhat.hola.config.b", defaultValue="Dos")
+    private String b;
+
+
 	@GET
     @Path("/hola")
     @Produces("text/plain")
-    @ApiOperation("Returns the greeting in Spanish")
     public String hola() {
         String hostname = servletRequest.getServerName();
-        return String.format("Hola de %s", hostname);
+        LOG.info("Value in variable a => "+a);
+        LOG.info("Value in variable b => "+b);
+        return String.format("Hola de %s\n", hostname);
     }
 }
