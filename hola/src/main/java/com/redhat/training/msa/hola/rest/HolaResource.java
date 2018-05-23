@@ -3,7 +3,9 @@ package com.redhat.training.msa.hola.rest;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
@@ -27,7 +29,9 @@ public class HolaResource {
     @ConfigProperty(name = "com.redhat.hola.config.b", defaultValue="Dos")
     private String b;
 
-    // TODO: Configure method to accept GET requests at the /hola path and return plain text response
+    @GET
+    @Path("/hola")
+    @Produces("text/plain")
     public String hola() {
         String hostname = servletRequest.getServerName();
         LOG.info("Value in variable a => "+a);
