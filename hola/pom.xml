@@ -27,36 +27,6 @@
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>jaxrs-jsonp</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>microprofile-config</artifactId>
-		</dependency>
-		<dependency>
-	      <groupId>org.slf4j</groupId>
-	      <artifactId>slf4j-api</artifactId>
-	      <version>${slf4j-api.version}</version>
-    	</dependency>
-   		<dependency>
-	      <groupId>org.slf4j</groupId>
-	      <artifactId>slf4j-jdk14</artifactId>
-	      <version>${slf4j-api.version}</version>
-   		</dependency>
-		<dependency>
-			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>arquillian</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.hamcrest</groupId>
-			<artifactId>hamcrest-all</artifactId>
-			<version>${hamcrest.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>io.rest-assured</groupId>
-			<artifactId>rest-assured</artifactId>
-			<version>${version.restassured}</version>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 
 
