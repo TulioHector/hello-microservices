@@ -8,3 +8,4 @@ spec:
   to:
     kind: Service
     name: ${project.artifactId}
+  host: bueno.apps.lab.example.com
