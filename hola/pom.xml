@@ -14,6 +14,25 @@
 	<name>Red Hat Training MSA: hola</name>
 	<description>Spanish Hello microservice</description>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.eclipse.microprofile</groupId>
+				<artifactId>microprofile</artifactId>
+				<version>${version.microprofile}</version>
+				<type>pom</type>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.wildfly.swarm</groupId>
+				<artifactId>bom</artifactId>
+				<version>${version.wildfly.swarm}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
@@ -31,16 +50,6 @@
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>microprofile-config</artifactId>
 		</dependency>
-		<dependency>
-	      <groupId>org.slf4j</groupId>
-	      <artifactId>slf4j-api</artifactId>
-	      <version>${slf4j-api.version}</version>
-    	</dependency>
-   		<dependency>
-	      <groupId>org.slf4j</groupId>
-	      <artifactId>slf4j-jdk14</artifactId>
-	      <version>${slf4j-api.version}</version>
-   		</dependency>
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>arquillian</artifactId>
