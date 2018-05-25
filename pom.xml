@@ -49,22 +49,4 @@
 		<slf4j-api.version>1.7.21</slf4j-api.version>
 	</properties>
 
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.eclipse.microprofile</groupId>
-				<artifactId>microprofile</artifactId>
-				<version>${version.microprofile}</version>
-				<type>pom</type>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.wildfly.swarm</groupId>
-				<artifactId>bom</artifactId>
-				<version>${version.wildfly.swarm}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 </project>
