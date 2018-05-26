@@ -20,7 +20,7 @@ import org.wildfly.swarm.Swarm;
 import org.wildfly.swarm.arquillian.CreateSwarm;
 
 @RunWith(Arquillian.class)
-public class HolaResourceFallbackTest {
+public class HolaResourceTest {
 
 
     @Deployment
