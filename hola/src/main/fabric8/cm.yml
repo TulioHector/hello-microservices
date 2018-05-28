@@ -11,8 +11,8 @@ data:
       redhat:
         hola: 
           config:
-            a: Tres
-            b: Quatro
+            a: 
+            b: 
 
 metadata:
   name: app-config
