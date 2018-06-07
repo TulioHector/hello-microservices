@@ -10,10 +10,10 @@ import org.springframework.context.ApplicationContext;
 @SpringBootApplication
 public class Application {
 
-  private static final Logger LOG = LoggerFactory.getLogger(Application.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Application.class);
 
-   public static void main(String[] args) {
-     LOG.info("Starting Spring Boot application...");
-      ApplicationContext ctx = SpringApplication.run(Application.class, args);
-   }
+    public static void main(String[] args) {
+        LOG.info("Starting Spring Boot application...");
+        ApplicationContext ctx = SpringApplication.run(Application.class, args);
+    }
 }

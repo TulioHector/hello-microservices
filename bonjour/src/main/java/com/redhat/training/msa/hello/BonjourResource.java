@@ -20,13 +20,13 @@ public class BonjourResource {
 
     @Context
     private HttpServletRequest servletRequest;
-
+    
     @GET
     @Path("/bonjour")
     @Produces(MediaType.TEXT_PLAIN)
     public String bonjour() {
         String hostname = servletRequest.getServerName(); 
-        return service.bonjour() + hostname + "\n";
+        return service.bonjour(hostname) + "\n";
     }
 
 }
