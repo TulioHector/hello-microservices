@@ -1,18 +1,18 @@
 package com.redhat.training.msa.hola;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.containsString;
+import static org.junit.Assert.assertThat;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import io.restassured.RestAssured;
+import org.springframework.web.client.RestTemplate;
 
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
@@ -24,20 +24,34 @@ public class BonjourResourceTest {
 
     @Value("${local.server.port}")
     private int port;
+    
+    private String baseURI;
 
     @Before
     public void beforeTest() {
-        RestAssured.baseURI = String.format("http://localhost:%d", port);
+        baseURI = String.format("http://localhost:%d", port);
     }
 
     @Test
     public void invokeHealthCheck() throws Exception {
-        given().get("/health").then().assertThat().statusCode(200).body(containsString("UP"));
+    	RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> response = restTemplate.getForEntity(
+		    baseURI + "/health", String.class);
+		int status =response.getStatusCodeValue();
+		String body = response.getBody();
+		assertThat(status, equalTo(200));
+		assertThat(body, containsString("{\"status\":\"UP\""));
     }
 
     @Test
     public void invokeHello() throws Exception {
-        given().get("/api/bonjour").then().assertThat().statusCode(200).body(containsString("Bonjour"));
+    	RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> response = restTemplate.getForEntity(
+		    baseURI + "/api/bonjour", String.class);
+		int status =response.getStatusCodeValue();
+		String body = response.getBody();
+		assertThat(status, equalTo(200));
+		assertThat(body, containsString("Bonjour"));
     }
 
 }
