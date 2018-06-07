@@ -37,7 +37,7 @@ public class BonjourResourceTest {
     	RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = restTemplate.getForEntity(
 		    baseURI + "/health", String.class);
-		int status =response.getStatusCodeValue();
+		int status = response.getStatusCodeValue();
 		String body = response.getBody();
 		assertThat(status, equalTo(200));
 		assertThat(body, containsString("{\"status\":\"UP\""));
@@ -48,7 +48,7 @@ public class BonjourResourceTest {
     	RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = restTemplate.getForEntity(
 		    baseURI + "/api/bonjour", String.class);
-		int status =response.getStatusCodeValue();
+		int status = response.getStatusCodeValue();
 		String body = response.getBody();
 		assertThat(status, equalTo(200));
 		assertThat(body, containsString("Bonjour"));

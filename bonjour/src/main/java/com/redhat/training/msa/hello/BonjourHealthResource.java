@@ -21,6 +21,7 @@ public class BonjourHealthResource {
     @Path("/health")
     @Produces(MediaType.APPLICATION_JSON)
     public Health getHealth() {
-        return healthEndpoint.invoke();
+        //TODO invoke the Spring Actuator HealthEndpoint
+        return null;
     }
 }

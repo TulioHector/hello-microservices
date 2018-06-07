@@ -1,12 +1,9 @@
 package com.redhat.training.msa.hello;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
-@Component
+//TODO annotate as a Spring framework managed bean
 public class BonjourServiceImpl implements BonjourService {
 
-    @Value("${com.redhat.training.msa.hello.show-location:true}")
+    //TODO annotate to inject the com.redhat.training.msa.hello.show-location system property
     private boolean showLocation;
 
     @Override

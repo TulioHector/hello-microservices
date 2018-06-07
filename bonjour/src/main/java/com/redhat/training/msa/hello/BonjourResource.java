@@ -12,10 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Path("/api")
-@Component
+//TODO annotate as a Spring framework managed bean
 public class BonjourResource {
 
-    @Autowired
+    //TODO inject the managed bean 
     private BonjourService service;
 
     @Context
