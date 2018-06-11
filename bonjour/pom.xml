@@ -97,13 +97,20 @@
         <executions>
           <execution>
             <id>fmp</id>
-            <phase>package</phase>
             <goals>
               <goal>resource</goal>
               <goal>build</goal>
             </goals>
           </execution>
         </executions>
+        <configuration>
+          <generator>
+            <config>
+              <spring-boot>
+              </spring-boot>
+            </config>
+          </generator>
+        </configuration>
       </plugin>
     </plugins>
   </build>
