@@ -44,11 +44,7 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-actuator</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-kubernetes-config</artifactId>
-      <version>${version.spring-cloud.kubernetes}</version>
-    </dependency>
+    <!-- TODO: add the kubernetes config starter</artifactId> -->
 	<dependency>
       <groupId>org.apache.cxf</groupId>
       <artifactId>cxf-spring-boot-starter-jaxrs</artifactId>
@@ -95,15 +91,11 @@
         <artifactId>fabric8-maven-plugin</artifactId>
         <version>${version.fabric8.plugin}</version>
         <executions>
-          <execution>
-            <id>fmp</id>
-            <phase>package</phase>
-            <goals>
-              <goal>resource</goal>
-              <goal>build</goal>
-            </goals>
-          </execution>
+          <!-- TODO add the FMP to standard Maven life cycle phases -->
         </executions>
+        <configuration>
+          <!-- TODO add the spring-boot generator -->
+        </configuration>
       </plugin>
     </plugins>
   </build>

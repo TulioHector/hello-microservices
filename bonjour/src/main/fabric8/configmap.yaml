@@ -1,4 +1,4 @@
 data:
-  om.redhat.training.msa.hello.show-location: false
+  com.redhat.training.msa.hello.show-location: false
 metadata:
   name: bonjour
