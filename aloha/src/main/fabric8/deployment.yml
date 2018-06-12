@@ -1,5 +1,5 @@
 ---
-apiVersion: "extensions/v1beta1"
+apiVersion: 1
 kind: "Deployment"
 spec:
   replicas: 1

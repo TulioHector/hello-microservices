@@ -29,11 +29,7 @@ import javax.ws.rs.core.SecurityContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-
 @Path("/")
-@Api("aloha")
 public class AlohaResource {
 
 	private final Logger log = LoggerFactory.getLogger(AlohaResource.class);
@@ -44,7 +40,6 @@ public class AlohaResource {
     @GET
     @Path("/aloha")
     @Produces(MediaType.TEXT_PLAIN)
-    @ApiOperation("Returns the greeting in Hawaiian")
     public String hola() {
         String hostname = servletRequest.getServerName(); 
         return String.format("Aloha mai %s\n", hostname);
