@@ -51,22 +51,6 @@
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>microprofile-config</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>arquillian</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.resteasy</groupId>
-			<artifactId>resteasy-client</artifactId>
-			<version>${version.resteasy}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.hamcrest</groupId>
-			<artifactId>hamcrest-all</artifactId>
-			<version>${hamcrest.version}</version>
-		</dependency>
 	</dependencies>
 
 
