@@ -23,6 +23,18 @@
   <name>Red Hat Training MSA: Ciao Vert.x App</name>
   <description>Vert.x Ciao Italian microservice</description>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.vertx</groupId>
+        <artifactId>vertx-dependencies</artifactId>
+        <version>${version.vertx}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <properties>
     <vertx.verticle>com.redhat.training.msa.ciao.MainVerticle</vertx.verticle>
   </properties>
