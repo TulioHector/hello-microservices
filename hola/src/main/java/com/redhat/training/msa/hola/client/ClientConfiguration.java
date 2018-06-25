@@ -11,7 +11,6 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 
 import com.redhat.training.msa.hola.rest.AlohaService;
-import com.redhat.training.msa.hola.tracing.WithoutTracing;
 
 public class ClientConfiguration {
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ClientConfiguration.class);
@@ -25,7 +24,6 @@ public class ClientConfiguration {
 
 	@Produces
 	@Singleton
-	@WithoutTracing 
 	public AlohaService alohaService() {
 		Client client = ClientBuilder.newClient();
 		WebTarget target = client.target("http://" + alohaHostname + ":" + alohaPort + "/api");

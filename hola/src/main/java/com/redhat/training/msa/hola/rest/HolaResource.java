@@ -16,50 +16,31 @@
 package com.redhat.training.msa.hola.rest;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.security.DeclareRoles;
-import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.SecurityContext;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.eclipse.microprofile.faulttolerance.Bulkhead;
-import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
-import org.eclipse.microprofile.faulttolerance.Fallback;
-import org.eclipse.microprofile.faulttolerance.Timeout;
-import org.eclipse.microprofile.jwt.JsonWebToken;
-import org.eclipse.microprofile.metrics.Counter;
-import org.eclipse.microprofile.metrics.annotation.Metric;
 
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
-import com.redhat.training.msa.hola.tracing.WithoutTracing;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import com.netflix.hystrix.HystrixCommandKey;
+import com.netflix.hystrix.HystrixCommandProperties;
 
 @Path("/")
-@Api("hola")
-@DeclareRoles({"VIP", "Voter"})
 
 @ApplicationScoped
 public class HolaResource {
 
     @Inject
-    @WithoutTracing
     private AlohaService alohaService;
 
     @Context
@@ -69,16 +50,6 @@ public class HolaResource {
     private HttpServletRequest servletRequest;
 
     private String serverName;
-
-    @Inject
-    @Metric(name = "requestCount", description = "Total endpoint requests made to the Hola microservice",
-            displayName="HolaResource#requestCount", absolute=true)
-    private Counter requestCounter;
-
-    @Inject
-    @Metric(name = "failureCount", description = "Total chained endpoint failures encountered",
-            displayName="HolaResource#failureCount", absolute=true)
-    private Counter failedCount;
 
 
     @Inject
@@ -101,10 +72,7 @@ public class HolaResource {
     @GET
     @Path("/hola")
     @Produces("text/plain")
-    @ApiOperation("Returns the greeting in Spanish")
-    @PermitAll
     public String hola() {
-        requestCounter.inc();
 
         return String.format("Hola de %s", hostname);
     }
@@ -115,43 +83,33 @@ public class HolaResource {
     @GET
     @Path("/hola-chaining")
     @Produces("application/json")
-    @ApiOperation("Returns the greeting plus the next service in the chain")
-    @PermitAll
-    @Fallback(fallbackMethod = "alohaFallback")
-    @Timeout(1000)
-    @CircuitBreaker(requestVolumeThreshold = 1,
-            failureRatio = 0.50, delay = 500)
     public List<String> holaChaining() {
-        requestCounter.inc();
         List<String> greetings = new ArrayList<>();
         greetings.add(hola());
-        greetings.add(alohaService.aloha());
+        greetings.add(new HolaChainingCommand(alohaService).execute());
         return greetings;
     }
 
-    /* (non-Javadoc)
-     * @see com.redhat.training.msa.hola.rest.HolaResource#secureHola()
-     */
-    @GET
-    @Path("/hola-secure")
-    @Produces("application/json")
-    @RolesAllowed({"VIP", "Voter"})
-    public SecurePackage secureHola() {
-        boolean isVIP = securityContext.isUserInRole("VIP");
-        JsonWebToken token = (JsonWebToken) securityContext.getUserPrincipal();
-        return new SecurePackage(token.getName(), new Date(token.getExpirationTime() * 1000).toString(), isVIP);
-    }
+    public static class HolaChainingCommand extends HystrixCommand<String>{
+    	private static final String HOLA_CHAINING_COMMAND_KEY = "HolaChainingCommand";
+		private AlohaService alohaService;
 
+		public HolaChainingCommand(AlohaService alohaService) {
+        	super(Setter
+    				.withGroupKey(HystrixCommandGroupKey.Factory.asKey("group"))
+    				.andCommandKey(HystrixCommandKey.Factory.asKey(HOLA_CHAINING_COMMAND_KEY))
+    				.andCommandPropertiesDefaults(
+    						HystrixCommandProperties
+    							.Setter()
+    								.withCircuitBreakerRequestVolumeThreshold(2)
+    								.withCircuitBreakerSleepWindowInMilliseconds(5000)));
+        	this.alohaService = alohaService;
 
-
-
-    @SuppressWarnings("unused")
-    private List<String> alohaFallback() {
-        failedCount.inc();
-        List<String> greetings = new ArrayList<>();
-        greetings.add(hola());
-        greetings.add("Aloha fallback");
-        return greetings;
-    }
+    	}
+    	
+		@Override
+		protected String run() throws Exception {
+			return alohaService.aloha();
+		}}
 
 }

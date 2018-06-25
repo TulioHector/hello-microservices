@@ -24,14 +24,7 @@ public class ArquillianTestUtils {
 				.addPackages(true, "com.redhat.training.msa")
 				.addAsLibraries(deps)
 				.addAsResource("project-defaults.yml","project-defaults.yml")
-				.addAsWebInfResource(EmptyAsset.INSTANCE,"beans.xml")
-	            .addAsWebInfResource("jwt-roles.properties", "classes/jwt-roles.properties")
-                .addAsManifestResource("privateKey.pem","classes/privateKey.pem")
-                .addAsWebInfResource("alumni.json","classes/alumni.json")
-                .addAsWebInfResource("unregistered.json","classes/unregistered.json");
-		
-//		System.out.println(webArchive.toString(true));
-
+				.addAsWebInfResource(EmptyAsset.INSTANCE,"beans.xml");
 		return webArchive;
 	}
 

@@ -20,11 +20,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-import feign.RequestLine;
 
 public interface AlohaService {
 
-	@RequestLine("GET /api/aloha")
 	@Path("aloha")
 	@Produces("text/plain")
 	@GET

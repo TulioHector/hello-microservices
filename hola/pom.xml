@@ -26,11 +26,27 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>microprofile</artifactId>
+			<artifactId>cdi</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>swagger</artifactId>
+			<artifactId>undertow</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.wildfly.swarm</groupId>
+			<artifactId>jaxrs-jsonp</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.wildfly.swarm</groupId>
+			<artifactId>monitor</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.wildfly.swarm</groupId>
+			<artifactId>microprofile-config</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.wildfly.swarm</groupId>
+			<artifactId>hystrix</artifactId>
 		</dependency>
 
 		<dependency>
@@ -38,35 +54,10 @@
 			<artifactId>resteasy-client</artifactId>
 			<scope>provided</scope>
 		</dependency>
-
 		<dependency>
-			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>ribbon</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>jaeger</artifactId>
-		</dependency>
-		<!-- Feign -->
-		<dependency>
-			<groupId>io.github.openfeign.opentracing</groupId>
-			<artifactId>feign-hystrix-opentracing</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.github.openfeign</groupId>
-			<artifactId>feign-jackson</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.github.openfeign</groupId>
-			<artifactId>feign-httpclient</artifactId>
-		</dependency>
-
-
-
-		<!-- OpenTracing implementation - Jaeger -->
-		<dependency>
-			<groupId>com.uber.jaeger</groupId>
-			<artifactId>jaeger-core</artifactId>
+			<groupId>com.netflix.hystrix</groupId>
+			<artifactId>hystrix-core</artifactId>
+			<version>${hystrix.version}</version>
 		</dependency>
 		<!-- arquillian -->
 		<dependency>
@@ -86,31 +77,15 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>com.github.tomakehurst</groupId>
 			<artifactId>wiremock</artifactId>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
-			<groupId>org.keycloak</groupId>
-			<artifactId>keycloak-core</artifactId>
-			<version>${version.keycloak}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.nimbusds</groupId>
-			<artifactId>nimbus-jose-jwt</artifactId>
-
 		</dependency>
 	</dependencies>
 
@@ -131,20 +106,6 @@
 							<exclude>webapp</exclude>
 						</excludes>
 					</generator>
-					<resources>
-						<labels>
-							<all>
-								<property>
-									<name>app</name>
-									<value>hola</value>
-								</property>
-								<property>
-									<name>hystrix.enabled</name>
-									<value>true</value>
-								</property>
-							</all>
-						</labels>
-					</resources>
 					<enricher>
 						<config>
 							<wildfly-swarm-health-check>
@@ -170,12 +131,9 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>${version.war.plugin}</version>
 				<configuration>
-					<!-- Java EE 7 doesn't require web.xml, Maven needs to catch up! -->
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
-			<!-- The WildFly Swarm plugin creates an uber jar -->
-			<!-- To use, run: mvn wildfly-swarm:run -->
 			<plugin>
 				<groupId>org.wildfly.swarm</groupId>
 				<artifactId>wildfly-swarm-plugin</artifactId>
