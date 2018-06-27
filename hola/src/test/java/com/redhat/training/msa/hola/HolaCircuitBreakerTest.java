@@ -20,7 +20,7 @@ import com.netflix.hystrix.exception.HystrixRuntimeException;
 import com.redhat.training.msa.hola.rest.AlohaService;
 import com.redhat.training.msa.hola.rest.HolaResource;
 
-public class CartGatewayAddToCartCircuitBreakerTest {
+public class HolaCircuitBreakerTest {
 
 	@Mock
 	private AlohaService proxy;
