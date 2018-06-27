@@ -1,0 +1,31 @@
+---
+apiVersion: "extensions/v1beta1"
+kind: "Deployment" 
+spec: 
+  replicas: 1
+  template: 
+    spec: 
+      containers: 
+      - livenessProbe:
+          failureThreshold: 2
+          httpGet:
+            path: "/health"
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 12
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: "/health"
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 12
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        env:
+        - name: JAVA_OPTIONS
+          value: "-Xmx512m"

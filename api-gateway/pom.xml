@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2018, Red Hat, Inc. and/or its affiliates, and individual 
-	contributors by the @authors tag. See the copyright.txt in the distribution 
-	for a full listing of individual contributors. Licensed under the Apache 
-	License, Version 2.0 (the "License"); you may not use this file except in 
-	compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
-	Unless required by applicable law or agreed to in writing, software distributed 
-	under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES 
-	OR CONDITIONS OF ANY KIND, either express or implied. See the License for 
-	the specific language governing permissions and limitations under the License. -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
@@ -18,73 +10,83 @@
 		<version>1.0</version>
 	</parent>
 
-	<artifactId>api-gateway</artifactId>
+	<artifactId>hello-api-gateway</artifactId>
 	<packaging>war</packaging>
-	<name>Red Hat Training MSA: API Gateway</name>
-	<description>The API Gateway Service</description>
+	<name>Red Hat Training MSA: Hello API Gateway</name>
+	<description>The Hello API Gateway Service</description>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.eclipse.microprofile</groupId>
+				<artifactId>microprofile</artifactId>
+				<version>${version.microprofile}</version>
+				<type>pom</type>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.wildfly.swarm</groupId>
+				<artifactId>bom</artifactId>
+				<version>${version.wildfly.swarm}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.wildfly.swarm</groupId>
+			<artifactId>cdi</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>microprofile-config</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>swagger</artifactId>
+			<artifactId>undertow</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>swagger-webapp</artifactId>
+			<artifactId>jaxrs-jsonp</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.wildfly.swarm</groupId>
+			<artifactId>arquillian</artifactId>
+			<version>${version.wildfly.swarm.community}</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-client</artifactId>
+			<version>${version.resteasy}</version>
 			<scope>provided</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-io</groupId>
-					<artifactId>commons-io</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		
-		<!-- arquillian -->
-		<dependency>
-			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>arquillian</artifactId>
-			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-io</groupId>
-					<artifactId>commons-io</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>io.rest-assured</groupId>
-			<artifactId>rest-assured</artifactId>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
+			<artifactId>mockito-core</artifactId>
+			<version>${mockito.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.github.tomakehurst</groupId>
 			<artifactId>wiremock-standalone</artifactId>
+			<version>${version.wiremock}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.8.9</version>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-all</artifactId>
+			<version>${hamcrest.version}</version>
 			<scope>test</scope>
 		</dependency>
+
+
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
-			<version>1.7.22</version>
+			<version>${sl4j-api.version}</version>
 		</dependency>
 	</dependencies>
 
@@ -98,13 +100,13 @@
 				<version>${version.fabric8.plugin}</version>
 				<configuration>
 					<generator>
-		                <includes>
-		                 	<include>wildfly-swarm</include>
-		                </includes>
-		                <excludes>
-		                  	<exclude>webapp</exclude>
-		                </excludes>
-              		</generator>
+						<includes>
+							<include>wildfly-swarm</include>
+						</includes>
+						<excludes>
+							<exclude>webapp</exclude>
+						</excludes>
+					</generator>
 				</configuration>
 				<executions>
 					<execution>
@@ -120,12 +122,9 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>${version.war.plugin}</version>
 				<configuration>
-					<!-- Java EE 7 doesn't require web.xml, Maven needs to catch up! -->
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
-			<!-- The WildFly Swarm plugin creates an uber jar -->
-			<!-- To use, run: mvn wildfly-swarm:run -->
 			<plugin>
 				<groupId>org.wildfly.swarm</groupId>
 				<artifactId>wildfly-swarm-plugin</artifactId>
@@ -143,7 +142,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-
-
 </project>

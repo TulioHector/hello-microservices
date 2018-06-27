@@ -1,11 +1,8 @@
 ---
 apiVersion: v1
-data:
-  project-defaults.yml: |
-    alohaHostname: "aloha.apps.lab.example.com"
-    alohaPort: "80"
-    holaHostname: "hola.apps.lab.example.com"
-    holaPort: "80"
 kind: ConfigMap
+data:
+  HOLA_SERVICE_URL: http://hola.apps.lab.example.com
+  BONJOUR_SERVICE_URL: http://bonjour.apps.lab.example.com
 metadata:
-  name: appconfigcm
+  name: gw-config
