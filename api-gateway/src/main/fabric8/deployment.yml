@@ -8,12 +8,12 @@ spec:
            valueFrom:
              configMapKeyRef:
                key: HOLA_SERVICE_URL
-               name: gw-config
+               name: app-config
          - name: BONJOUR_SERVICE_URL
            valueFrom:
              configMapKeyRef:
                key: BONJOUR_SERVICE_URL
-               name: gw-config
+               name: app-config
         resources:
           limits:
             cpu: 1
