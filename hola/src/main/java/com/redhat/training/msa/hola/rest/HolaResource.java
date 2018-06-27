@@ -91,7 +91,7 @@ public class HolaResource {
     }
 
     public static class HolaChainingCommand extends HystrixCommand<String>{
-    	private static final String HOLA_CHAINING_COMMAND_KEY = "HolaChainingCommand";
+    	public static final String HOLA_CHAINING_COMMAND_KEY = "HolaChainingCommand";
 		private AlohaService alohaService;
 
 		public HolaChainingCommand(AlohaService alohaService) {
