@@ -81,13 +81,6 @@
 			<version>${hamcrest.version}</version>
 			<scope>test</scope>
 		</dependency>
-
-
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
-			<version>${sl4j-api.version}</version>
-		</dependency>
 	</dependencies>
 
 

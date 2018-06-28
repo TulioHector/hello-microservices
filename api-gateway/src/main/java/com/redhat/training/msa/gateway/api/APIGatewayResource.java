@@ -11,8 +11,6 @@ import javax.ws.rs.client.WebTarget;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.redhat.training.msa.gateway.proxy.BonjourProxy;
 import com.redhat.training.msa.gateway.proxy.HolaProxy;
@@ -21,8 +19,6 @@ import com.redhat.training.msa.gateway.proxy.HolaProxy;
 @RequestScoped
 public class APIGatewayResource {
 	
-	private static final Logger log = LoggerFactory.getLogger(APIGatewayResource.class);
-
 	@Inject
 	@ConfigProperty(name = "HOLA_SERVICE_URL")
 	private String holaURL;
