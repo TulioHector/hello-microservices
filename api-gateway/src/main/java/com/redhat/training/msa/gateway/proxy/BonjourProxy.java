@@ -1,14 +1,8 @@
 package com.redhat.training.msa.gateway.proxy;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-
 public interface BonjourProxy {
-
-	@Path("bonjour")
-	@Produces("text/plain")
-	@GET
+	
+	// TODO: Add annotations for Bonjour microservice
 	public String bonjour();
 	
 }

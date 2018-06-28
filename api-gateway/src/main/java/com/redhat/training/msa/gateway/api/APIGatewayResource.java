@@ -56,13 +56,11 @@ public class APIGatewayResource {
         return response;
     }
 
-    @GET
-    @Path("/fr")
-    @Produces("text/plain")
+    // TODO: Add annotations for the bonjour microservice
     public String bonjour() {
     	BonjourProxy proxy = buildBonjourProxy();
-        String response = proxy.bonjour();
-
+    	// TODO: Invoke the correct method on the bonjour proxy
+        String response = "";
         return response;
     }
 }
