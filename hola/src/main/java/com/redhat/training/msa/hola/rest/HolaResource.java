@@ -30,6 +30,10 @@ import javax.ws.rs.core.SecurityContext;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
+import com.netflix.hystrix.HystrixCommand;
+import com.netflix.hystrix.HystrixCommandGroupKey;
+import com.netflix.hystrix.HystrixCommandKey;
+import com.netflix.hystrix.HystrixCommandProperties;
 
 @Path("/")
 
@@ -82,13 +86,28 @@ public class HolaResource {
     public List<String> holaChaining() {
         List<String> greetings = new ArrayList<>();
         greetings.add(hola());
-        // TODO Instantiate the HystrixCommand implementation and invoke execute.
-        greetings.add(alohaService.aloha());
+        greetings.add(new HolaChainingCommand(alohaService).execute());
         return greetings;
     }
-    //TODO Create a class that extends a HystrixCommand. Use the following values to set up the Circuit Breaker:
-    //Group Key: group
-    //Command Key: HolaChainingCommand
-    //Request Volume Threshold: 2
-    //Sleep Window: 5000ms
+
+    public static class HolaChainingCommand extends HystrixCommand<String>{
+    	public static final String HOLA_CHAINING_COMMAND_KEY = null;
+
+		public HolaChainingCommand() {
+        	super(Setter
+    				.withGroupKey(HystrixCommandGroupKey.Factory.asKey("group"))
+    				.andCommandKey(HystrixCommandKey.Factory.asKey(HOLA_CHAINING_COMMAND_KEY))
+    				.andCommandPropertiesDefaults(
+    						HystrixCommandProperties
+    							.Setter()
+    								.withCircuitBreakerRequestVolumeThreshold()
+    								.withCircuitBreakerSleepWindowInMilliseconds()));
+
+    	}
+    	
+		@Override
+		protected String run() throws Exception {
+			return alohaService.aloha();
+		}}
+
 }
