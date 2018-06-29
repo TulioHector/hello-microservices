@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 data:
-  HOLA_SERVICE_URL: http://hola.apps.lab.example.com/api
-  BONJOUR_SERVICE_URL: http://bonjour.apps.lab.example.com/api
+  HOLA_SERVICE_URL: http://hola-hello-gateway.apps.lab.example.com/api
+  BONJOUR_SERVICE_URL: http://bonjour-hello-gateway.apps.lab.example.com/api
 metadata:
   name: app-config
