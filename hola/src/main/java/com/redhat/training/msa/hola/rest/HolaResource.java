@@ -91,9 +91,11 @@ public class HolaResource {
     }
 
     public static class HolaChainingCommand extends HystrixCommand<String>{
-    	public static final String HOLA_CHAINING_COMMAND_KEY = null;
+    	
+        public static final String HOLA_CHAINING_COMMAND_KEY = null;
 
 		public HolaChainingCommand() {
+
         	super(Setter
     				.withGroupKey(HystrixCommandGroupKey.Factory.asKey("group"))
     				.andCommandKey(HystrixCommandKey.Factory.asKey(HOLA_CHAINING_COMMAND_KEY))
