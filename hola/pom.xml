@@ -22,9 +22,27 @@
 	<packaging>war</packaging>
 	<name>Red Hat Training MSA: hola</name>
 	<description>Spanish Hello microservice</description>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.eclipse.microprofile</groupId>
+				<artifactId>microprofile</artifactId>
+				<version>${version.microprofile}</version>
+				<type>pom</type>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.wildfly.swarm</groupId>
+				<artifactId>bom</artifactId>
+				<version>${version.wildfly.swarm}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<dependencies>
-		<!-- declare the Hystrix core dependency-->
+		<!-- declare the Hystrix core dependency -->
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>cdi</artifactId>
@@ -45,12 +63,38 @@
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>microprofile-config</artifactId>
 		</dependency>
-		<!-- declare the Hystrix WildFly Swarm dependency-->
-
+		<!-- declare the Hystrix WildFly Swarm dependency -->
 
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-client</artifactId>
+			<version>${version.resteasy}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-all</artifactId>
+			<version>${hamcrest.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>${mockito.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>${version.restassured}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.tomakehurst</groupId>
+			<artifactId>wiremock</artifactId>
+			<version>${version.wiremock}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-client</artifactId>
+			<version>${version.resteasy}</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -58,11 +102,13 @@
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>arquillian</artifactId>
+			<version>${version.wildfly.swarm.community}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
+			<version>${version.restassured}</version>
 			<scope>test</scope>
 			<exclusions>
 				<exclusion>
@@ -74,6 +120,7 @@
 		<dependency>
 			<groupId>com.github.tomakehurst</groupId>
 			<artifactId>wiremock</artifactId>
+			<version>${version.wiremock}</version>	
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -150,3 +197,4 @@
 
 
 </project>
+
