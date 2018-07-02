@@ -57,7 +57,7 @@
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>health-api</artifactId>
-			<version>${version.wildfly.swarm.community}</version>
+			<version>${version.wildfly.swarm}</version>
 		</dependency>
 
 		<dependency>
@@ -80,7 +80,7 @@
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>hystrix</artifactId>
-			<version>${version.wildfly.swarm.community}</version>
+			<version>${version.wildfly.swarm}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hamcrest</groupId>
