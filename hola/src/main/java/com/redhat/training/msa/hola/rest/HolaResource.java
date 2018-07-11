@@ -30,21 +30,9 @@ public class HolaResource {
     private AlohaService alohaService;
 
     @Context
-    private SecurityContext securityContext;
-
-    @Context
     private HttpServletRequest servletRequest;
 
     private String serverName;
-
-
-    @Inject
-    @ConfigProperty(name="alohaHostname")
-    private String hostname;
-
-    @Inject
-    @ConfigProperty(name="alohaPort")
-    private String port;
 
 
     @PostConstruct
@@ -56,8 +44,7 @@ public class HolaResource {
     @Path("/hola")
     @Produces("text/plain")
     public String hola() {
-
-        return String.format("Hola de %s", hostname);
+        return String.format("Hola de %s", serverName);
     }
 
     @GET
