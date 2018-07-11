@@ -42,7 +42,14 @@
 	</dependencyManagement>
 
 	<dependencies>
-		<!-- declare the Hystrix core dependency -->
+		<!-- TODO add the Hystrix core dependency -->
+		<!-- 
+		<dependency>
+			<groupId>org.wildfly.swarm</groupId>
+			<artifactId>hystrix</artifactId>
+			<version>${version.wildfly.swarm.community}</version>
+		</dependency>
+		 -->
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>cdi</artifactId>
@@ -59,7 +66,7 @@
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>microprofile-config</artifactId>
 		</dependency>
-		<!-- declare the Hystrix WildFly Swarm dependency -->
+		<!-- TODO add the Hystrix WildFly Swarm dependency -->
 
 		<dependency>
 			<groupId>org.hamcrest</groupId>
@@ -105,7 +112,6 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
@@ -168,8 +174,6 @@
 			</plugin>
 		</plugins>
 	</build>
-
-
 
 </project>
 

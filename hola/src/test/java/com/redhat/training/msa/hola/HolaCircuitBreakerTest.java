@@ -17,7 +17,7 @@ import com.netflix.hystrix.Hystrix;
 import com.netflix.hystrix.HystrixCircuitBreaker;
 import com.netflix.hystrix.HystrixCommandKey;
 import com.netflix.hystrix.exception.HystrixRuntimeException;
-import com.redhat.training.msa.hola.rest.AlohaService;
+import com.redhat.training.msa.hola.client.AlohaService;
 import com.redhat.training.msa.hola.rest.HolaResource;
 
 public class HolaCircuitBreakerTest {
