@@ -43,13 +43,13 @@
 
 	<dependencies>
 		<!-- TODO add the Hystrix core dependency -->
-		<!-- 
+		<!--
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>hystrix</artifactId>
 			<version>${version.wildfly.swarm.community}</version>
 		</dependency>
-		 -->
+		-->
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>cdi</artifactId>

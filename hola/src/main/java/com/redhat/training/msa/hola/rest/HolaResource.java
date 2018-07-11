@@ -79,7 +79,8 @@ public class HolaResource {
     	
 		@Override
 		protected String run() throws Exception {
-			return alohaService.aloha();
+			//TODO invoke the Aloha microservice
+			return null;
 		}
 	}
 
