@@ -12,8 +12,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 
-import org.eclipse.microprofile.config.inject.ConfigProperty;
-
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
 import com.netflix.hystrix.HystrixCommandKey;
@@ -66,7 +64,8 @@ public class HolaResource {
 				.andCommandPropertiesDefaults(
 					HystrixCommandProperties.Setter()
 						.withCircuitBreakerRequestVolumeThreshold(2)
-						.withCircuitBreakerSleepWindowInMilliseconds(5000)));
+						.withCircuitBreakerSleepWindowInMilliseconds(5000))
+			);
 			this.alohaService = alohaService;
 		}
     	
