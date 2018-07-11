@@ -29,7 +29,7 @@ public class HolaCircuitBreakerTest {
 	public void before() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		resetHystrix();
-		warmUpAddToCartCircuitBreaker();
+		warmUpCircuitBreaker();
 		openCircuitBreakerAfterOneFailingRequest();
 
 	}
@@ -62,7 +62,7 @@ public class HolaCircuitBreakerTest {
 		Hystrix.reset();
 	}
 
-	private void warmUpAddToCartCircuitBreaker() {
+	private void warmUpCircuitBreaker() {
 		when(proxy.aloha()).thenReturn(null);
 		HolaResource.HolaChainingCommand command = new HolaResource.HolaChainingCommand(proxy);
 		command.execute();
