@@ -1,5 +1,7 @@
 package com.redhat.training.msa.hola.client;
 
+import java.util.logging.Logger;
+
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -10,10 +12,9 @@ import javax.ws.rs.client.WebTarget;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 
-import com.redhat.training.msa.hola.rest.AlohaService;
-
 public class ClientConfiguration {
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ClientConfiguration.class);
+	private static final Logger log = Logger.getLogger(ClientConfiguration.class.getName());
+	
     @Inject
 	@ConfigProperty(name = "alohaPort")
 	private String alohaPort;
