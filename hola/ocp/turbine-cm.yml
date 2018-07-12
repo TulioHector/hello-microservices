@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: turbine-server
+data:
+  application.yml: |
+    turbine.instanceUrlSuffix: :8080/hystrix.stream
+    turbine.aggregator.clusterConfig: CHANGE_ME
+    turbine.aggregator.clusters.hola: CHANGE_ME
+

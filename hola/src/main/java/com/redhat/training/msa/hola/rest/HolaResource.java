@@ -31,7 +31,6 @@ public class HolaResource {
 
     private String serverName;
 
-
     @PostConstruct
     public void init() {
         serverName = servletRequest.getServerName();
@@ -41,7 +40,7 @@ public class HolaResource {
     @Path("/hola")
     @Produces("text/plain")
     public String hola() {
-        return String.format("Hola de %s", serverName);
+        return String.format("Hola de %s\n", serverName);
     }
 
     @GET
@@ -50,15 +49,12 @@ public class HolaResource {
     public List<String> holaChaining() {
         List<String> greetings = new ArrayList<>();
         greetings.add(hola());
-        //TODO wrap the call with a Hystrix command
-        greetings.add(alohaService.aloha());
+        greetings.add(new HolaChainingCommand(alohaService).execute());
         return greetings;
     }
 
 	public static class HolaChainingCommand extends HystrixCommand<String> {
-    	
-		//TODO change the Hystrix command key
-		public static final String HOLA_CHAINING_COMMAND_KEY = "CHANGE_ME";
+		public static final String HOLA_CHAINING_COMMAND_KEY = "HolaChainingCommand";
 		private AlohaService alohaService;
 
 		public HolaChainingCommand(AlohaService alohaService) {
@@ -67,17 +63,15 @@ public class HolaResource {
 				.andCommandKey(HystrixCommandKey.Factory.asKey(HOLA_CHAINING_COMMAND_KEY))
 				.andCommandPropertiesDefaults(
 					HystrixCommandProperties.Setter()
-						//TODO change Hystrix settings
-						.withCircuitBreakerRequestVolumeThreshold(-1)
-						.withCircuitBreakerSleepWindowInMilliseconds(-1))
+						.withCircuitBreakerRequestVolumeThreshold(2)
+						.withCircuitBreakerSleepWindowInMilliseconds(5000))
 			);
 			this.alohaService = alohaService;
 		}
     	
 		@Override
 		protected String run() throws Exception {
-			//TODO invoke the Aloha microservice
-			return null;
+			return alohaService.aloha();
 		}
 	}
 
