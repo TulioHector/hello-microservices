@@ -5,6 +5,6 @@ metadata:
 data:
   application.yml: |
     turbine.instanceUrlSuffix: :8080/hystrix.stream
-    turbine.aggregator.clusterConfig: CHANGE_ME
-    turbine.aggregator.clusters.hola: CHANGE_ME
+    turbine.aggregator.clusterConfig: hola
+    turbine.aggregator.clusters.hola: hola-monitor.hola
 

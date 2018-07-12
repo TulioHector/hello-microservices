@@ -2,7 +2,8 @@ apiVersion: "v1"
 kind: "Service"
 metadata:
   labels:
-    #TODO add labels for turbine
+    hystrix.enabled: true
+    hystrix.cluster: hola
 spec:
   ports:
     - name: 8080-tcp
