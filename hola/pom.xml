@@ -42,18 +42,18 @@
 	</dependencyManagement>
 
 	<dependencies>
-
+		<!-- TODO add the Hystrix core dependency -->
+		<!--
 		<dependency>
-			<groupId>com.netflix.hystrix</groupId>
-			<artifactId>hystrix-core</artifactId>
-			<version>${hystrix.version}</version>
+			<groupId>org.wildfly.swarm</groupId>
+			<artifactId>hystrix</artifactId>
+			<version>${version.wildfly.swarm.community}</version>
 		</dependency>
-
+		-->
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>cdi</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>undertow</artifactId>
@@ -66,12 +66,8 @@
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>microprofile-config</artifactId>
 		</dependency>
+		<!-- TODO add the Hystrix WildFly Swarm dependency -->
 
-		<dependency>
-			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>hystrix</artifactId>
-			<version>${version.wildfly.swarm.community}</version>
-		</dependency>
 		<dependency>
 			<groupId>org.hamcrest</groupId>
 			<artifactId>hamcrest-all</artifactId>
@@ -106,7 +102,7 @@
 		<dependency>
 			<groupId>com.github.tomakehurst</groupId>
 			<artifactId>wiremock</artifactId>
-			<version>${version.wiremock}</version>
+			<version>${version.wiremock}</version>	
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -141,30 +137,6 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
-			<plugin>
-				<groupId>io.fabric8</groupId>
-				<artifactId>fabric8-maven-plugin</artifactId>
-				<version>${version.fabric8.plugin}</version>
-				<executions>
-					<execution>
-					<id>fmp</id>
-					<goals>
-						<goal>resource</goal>
-						<goal>build</goal>
-					</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<generator>
-						<includes>
-							<include>wildfly-swarm</include>
-						</includes>
-						<excludes>
-							<exclude>webapp</exclude>
-						</excludes>
-					</generator>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
