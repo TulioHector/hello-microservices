@@ -40,7 +40,7 @@ public class HolaResource {
     @Path("/hola")
     @Produces("text/plain")
     public String hola() {
-        return String.format("Hola de %s", serverName);
+        return String.format("Hola de %s\n", serverName);
     }
 
     @GET
