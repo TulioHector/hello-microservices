@@ -45,9 +45,9 @@
 		<!-- TODO add the Hystrix core dependency -->
 		<!--
 		<dependency>
-			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>hystrix</artifactId>
-			<version>${version.wildfly.swarm.community}</version>
+			<groupId>com.netflix.hystrix</groupId>
+			<artifactId>hystrix-core</artifactId>
+			<version>${hystrix.version}</version>
 		</dependency>
 		-->
 		<dependency>
