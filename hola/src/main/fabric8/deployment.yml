@@ -3,8 +3,7 @@ spec:
   template:
     metadata:
       labels:
-        hystrix.enabled: true
-        hystrix.cluster: hola
+        #TODO add labels for turbine
     spec:
       containers:
       - env:
