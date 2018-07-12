@@ -1,20 +1,32 @@
----
-apiVersion: "extensions/v1beta1"
-kind: "Deployment"
+metadata:
+  labels:
+    hystrix.cluster: hola
+    hystrix.enabled: true
 spec:
   replicas: 1
   template:
+    metadata:
+      labels:
+        hystrix.cluster: hola
+        hystrix.enabled: true
     spec:
       containers:
       - env:
          - name: JAVA_OPTIONS
-           value: "-Xmx512m -Dswarm.bind.address=0.0.0.0 -Dswarm.project.stage.file=file:///app/config/project-defaults.yml"
+           value: "-Dswarm.project.stage.file=file:///app/config/project-defaults.yml"
+         - name: GC_MAX_METASPACE_SIZE
+           value: '200'
+         - name: AB_JOLOKIA_OFF
+           value: 'true'
+         - name: AB_OFF
+           value: 'true'
+        resources:
+          limits:
+            memory: 512Mi
         volumeMounts:
-        - mountPath: /app/config
-          name: appconfigvol
-          readOnly: true
+         - name: config
+           mountPath: /app/config
       volumes:
-      - configMap:
-          defaultMode: 420
-          name: appconfigcm
-        name: appconfigvol
+        - configMap:
+            name: app-config
+          name: config

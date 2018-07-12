@@ -2,8 +2,12 @@
 apiVersion: v1
 data:
   project-defaults.yml: |
+    swarm:
+      bind:
+        address: 0.0.0.0
+
     alohaHostname: "aloha.apps.lab.example.com"
     alohaPort: "80"
 kind: ConfigMap
 metadata:
-  name: appconfigcm
+  name: app-config
