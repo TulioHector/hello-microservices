@@ -31,7 +31,7 @@ public class MainVerticle extends AbstractVerticle {
         registerCiaoService();
 
         Router router = Router.router(vertx);
-        //TODO: add the /api/ciao/:name API entry point
+        //TODO: add the /api/ciao/:nome API entry point
 
         //TODO: add the Router as request handler for the HTTP server
         vertx.createHttpServer()
