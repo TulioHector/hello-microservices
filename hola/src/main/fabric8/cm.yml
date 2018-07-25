@@ -12,7 +12,7 @@ data:
         hola: 
           config:
             a: Tres
-            b: Quatro
+            b: Cuatro
 
 metadata:
   name: app-config
